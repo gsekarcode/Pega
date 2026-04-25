@@ -1,0 +1,63 @@
+{
+  "name": "DevDX_Extensions_Layout1",
+  "label": "Layout1",
+  "description": "Flexible layout component with configurable columns and spacing",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_Layout1",
+  "type": "Template",
+  "subtype": "LAYOUT",
+  "icon": "DefaultLayout.svg",
+  "properties": [
+    {
+      "format": "SELECT",
+      "name": "layoutMode",
+      "label": "Layout Mode",
+      "defaultValue": "TWO_COLUMN",
+      "source": [
+        { "key": "TWO_COLUMN", "value": "Two Column" },
+        { "key": "THREE_COLUMN", "value": "Three Column" },
+        { "key": "SINGLE_COLUMN", "value": "Single Column" }
+      ]
+    },
+    {
+      "format": "SELECT",
+      "name": "templateOverrideMode",
+      "label": "Template for embedded views",
+      "defaultValue": "USE_TEMPLATE",
+      "source": [
+        { "key": "USE_TEMPLATE", "value": "Use template" },
+        { "key": "IGNORE_TEMPLATE", "value": "Ignore template" }
+      ]
+    },
+    {
+      "format": "INSTRUCTIONS"
+    },
+    {
+      "name": "columnGap",
+      "label": "Column Gap (px)",
+      "format": "TEXT",
+      "defaultValue": "16"
+    },
+    {
+      "name": "rowGap",
+      "label": "Row Gap (px)",
+      "format": "TEXT",
+      "defaultValue": "16"
+    },
+    {
+      "name": "columnWidth",
+      "label": "Column Width (%)",
+      "format": "TEXT",
+      "defaultValue": "50"
+    },
+    {
+      "name": "Regions",
+      "label": "Regions",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    }
+  ]
+}

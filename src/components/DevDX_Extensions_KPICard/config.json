@@ -1,0 +1,33 @@
+{
+  "name": "DevDX_Extensions_KPICard",
+  "label": "KPI Card",
+  "description": "Displays a single key performance indicator with a value, label, and accent color",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_KPICard",
+  "type": "Field",
+  "subtype": "DISPLAY",
+  "icon": "images/pz-text.svg",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Label",
+      "format": "TEXT",
+      "defaultValue": "Open Cases"
+    },
+    {
+      "name": "value",
+      "label": "Value",
+      "format": "TEXT",
+      "defaultValue": "0"
+    },
+    {
+      "name": "color",
+      "label": "Accent color (hex)",
+      "format": "TEXT",
+      "defaultValue": "#2563eb"
+    }
+  ]
+}

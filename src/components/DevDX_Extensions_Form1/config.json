@@ -1,0 +1,47 @@
+{
+  "name": "DevDX_Extensions_Form1",
+  "label": "Form1",
+  "description": "Form1",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_Form1",
+  "type": "Template",
+  "subtype": "FORM",
+  "icon": "DefaultForm.svg",
+    "properties": [
+    
+    {
+      "format": "SELECT",
+      "name": "templateOverrideMode",
+      "label": "Template for embedded views",
+      "defaultValue": "USE_TEMPLATE",
+      "source": [
+        { "key": "USE_TEMPLATE", "value": "Use template" },
+        { "key": "IGNORE_TEMPLATE", "value": "Ignore template" }
+      ]
+    },
+    {
+      "format": "INSTRUCTIONS"
+    },
+    {
+      "name": "leftColWidth",
+      "label": "Left Column Width (%)",
+      "format": "TEXT",
+      "defaultValue": "25"
+    },
+    {
+      "name": "rightColWidth",
+      "label": "Right Column Width (%)",
+      "format": "TEXT",
+      "defaultValue": "75"
+    },
+    {
+      "name": "Fields",
+      "label": "Fields",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    }
+  ]
+}

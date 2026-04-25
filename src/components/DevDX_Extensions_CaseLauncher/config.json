@@ -1,0 +1,66 @@
+{
+  "name": "DevDX_Extensions_CaseLauncher",
+  "label": "Case Launcher",
+  "description": "Widget with a button to start a case. Supports auto-launch on page load.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_CaseLauncher",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Header",
+      "format": "TEXT",
+      "defaultValue": "Start a case",
+      "required": true
+    },
+    {
+      "name": "description",
+      "label": "Description",
+      "format": "TEXT",
+      "defaultValue": "Click the button below to create a new case."
+    },
+    {
+      "name": "classFilter",
+      "label": "Case type",
+      "format": "SELECT",
+      "placeholder": "Choose a case type...",
+      "source": {
+        "name": "D_pyQuickCreate",
+        "displayProp": "pyLabel",
+        "valueProp": "pyClassName"
+      },
+      "required": true
+    },
+    {
+      "name": "labelPrimaryButton",
+      "label": "Button label",
+      "format": "TEXT",
+      "defaultValue": "Create case",
+      "required": true
+    },
+    {
+      "name": "autoLaunch",
+      "label": "Auto launch",
+      "format": "BOOLEAN",
+      "defaultValue": false
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "autoLaunch": false
+  }
+}

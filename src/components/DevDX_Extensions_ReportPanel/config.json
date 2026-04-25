@@ -1,0 +1,81 @@
+{
+  "name": "DevDX_Extensions_ReportPanel",
+  "label": "Report Panel",
+  "description": "Displays a row of KPI stat cards, optionally loaded from a Pega Data Page",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_ReportPanel",
+  "type": "View",
+  "subtype": "DETAILS",
+  "icon": "images/pz-details.svg",
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Panel heading",
+      "format": "TEXT",
+      "defaultValue": "Reports"
+    },
+    {
+      "name": "dataPageName",
+      "label": "Data Page name (optional)",
+      "format": "TEXT",
+      "defaultValue": ""
+    },
+    {
+      "name": "stat1Label",
+      "label": "Stat 1 — Label",
+      "format": "TEXT",
+      "defaultValue": "Open Cases"
+    },
+    {
+      "name": "stat1Value",
+      "label": "Stat 1 — Value",
+      "format": "TEXT",
+      "defaultValue": "0"
+    },
+    {
+      "name": "stat1Color",
+      "label": "Stat 1 — Color (hex)",
+      "format": "TEXT",
+      "defaultValue": "#2563eb"
+    },
+    {
+      "name": "stat2Label",
+      "label": "Stat 2 — Label",
+      "format": "TEXT",
+      "defaultValue": "Resolved Today"
+    },
+    {
+      "name": "stat2Value",
+      "label": "Stat 2 — Value",
+      "format": "TEXT",
+      "defaultValue": "0"
+    },
+    {
+      "name": "stat2Color",
+      "label": "Stat 2 — Color (hex)",
+      "format": "TEXT",
+      "defaultValue": "#16a34a"
+    },
+    {
+      "name": "stat3Label",
+      "label": "Stat 3 — Label",
+      "format": "TEXT",
+      "defaultValue": "Avg Resolution (hrs)"
+    },
+    {
+      "name": "stat3Value",
+      "label": "Stat 3 — Value",
+      "format": "TEXT",
+      "defaultValue": "0"
+    },
+    {
+      "name": "stat3Color",
+      "label": "Stat 3 — Color (hex)",
+      "format": "TEXT",
+      "defaultValue": "#9333ea"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "DevDX_Extensions_TwoColumnForm",
+  "label": "Two Column Form",
+  "description": "Two-region form template with configurable left and right column widths",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_TwoColumnForm",
+  "type": "Template",
+  "subtype": "FORM",
+  "icon": "images/pz-two-column.svg",
+  "properties": [
+    {
+      "name": "leftColWidth",
+      "label": "Left column width (%)",
+      "format": "TEXT",
+      "defaultValue": "50"
+    },
+    {
+      "name": "rightColWidth",
+      "label": "Right column width (%)",
+      "format": "TEXT",
+      "defaultValue": "50"
+    },
+    {
+      "name": "A",
+      "label": "Region A (Left)",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views"],
+      "allowCreatingGroup": true
+    },
+    {
+      "name": "B",
+      "label": "Region B (Right)",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views"],
+      "allowCreatingGroup": true
+    }
+  ]
+}

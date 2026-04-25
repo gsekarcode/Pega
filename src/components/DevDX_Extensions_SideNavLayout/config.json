@@ -1,0 +1,71 @@
+{
+  "name": "DevDX_Extensions_SideNavLayout",
+  "label": "Side Nav Layout",
+  "description": "Page layout with a left navigation panel and a right content panel. Clicking a nav item loads its view on the right.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_SideNavLayout",
+  "type": "Template",
+  "subtype": "LAYOUT",
+  "icon": "images/pz-two-column.svg",
+  "properties": [
+    {
+      "name": "navLabel1",
+      "label": "Item 1 — label",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "Slot1",
+      "label": "Item 1 — content",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views", "Fields", "Widgets"]
+    },
+    {
+      "name": "navLabel2",
+      "label": "Item 2 — label",
+      "format": "TEXT"
+    },
+    {
+      "name": "Slot2",
+      "label": "Item 2 — content",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views", "Fields", "Widgets"]
+    },
+    {
+      "name": "navLabel3",
+      "label": "Item 3 — label",
+      "format": "TEXT"
+    },
+    {
+      "name": "Slot3",
+      "label": "Item 3 — content",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views", "Fields", "Widgets"]
+    },
+    {
+      "name": "navLabel4",
+      "label": "Item 4 — label",
+      "format": "TEXT"
+    },
+    {
+      "name": "Slot4",
+      "label": "Item 4 — content",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views", "Fields", "Widgets"]
+    },
+    {
+      "name": "navLabel5",
+      "label": "Item 5 — label",
+      "format": "TEXT"
+    },
+    {
+      "name": "Slot5",
+      "label": "Item 5 — content",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views", "Fields", "Widgets"]
+    }
+  ]
+}

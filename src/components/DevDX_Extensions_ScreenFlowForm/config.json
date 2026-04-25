@@ -1,0 +1,85 @@
+{
+  "name": "DevDX_Extensions_ScreenFlowForm",
+  "label": "Screen Flow Form",
+  "description": "Form template for screen flows. Shows a step progress indicator, the current screen's fields, and Previous / Next / Submit navigation buttons.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_ScreenFlowForm",
+  "type": "Template",
+  "subtype": "FORM",
+  "icon": "images/pz-two-column.svg",
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Step heading",
+      "format": "TEXT"
+    },
+    {
+      "name": "stepLabels",
+      "label": "Step labels (comma-separated)",
+      "format": "TEXT",
+      "defaultValue": "Step 1,Step 2,Step 3"
+    },
+    {
+      "name": "currentStep",
+      "label": "Current step number (1-based)",
+      "format": "NUMBER",
+      "defaultValue": 1
+    },
+    {
+      "name": "showStepProgress",
+      "label": "Show step progress bar",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    },
+    {
+      "name": "showNavigationButtons",
+      "label": "Show navigation buttons",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    },
+    {
+      "label": "Button labels",
+      "format": "GROUP",
+      "visibility": "($this.showNavigationButtons = true)",
+      "properties": [
+        {
+          "name": "labelPrevious",
+          "label": "Previous button",
+          "format": "TEXT",
+          "defaultValue": "Previous"
+        },
+        {
+          "name": "labelNext",
+          "label": "Next button",
+          "format": "TEXT",
+          "defaultValue": "Next"
+        },
+        {
+          "name": "labelSubmit",
+          "label": "Submit button (last step)",
+          "format": "TEXT",
+          "defaultValue": "Submit"
+        },
+      ]
+    },
+    {
+      "name": "Fields",
+      "label": "Form fields",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Fields", "Views"],
+      "allowCreatingGroup": true
+    }
+  ],
+  "defaultConfig": {
+    "stepLabels": "Step 1,Step 2,Step 3",
+    "currentStep": 1,
+    "showStepProgress": true,
+    "showNavigationButtons": true,
+    "labelPrevious": "Previous",
+    "labelNext": "Next",
+    "labelSubmit": "Submit"
+  }
+}
