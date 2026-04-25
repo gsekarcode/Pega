@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { DevDXExtensionsSSNField } from './index';
 
-const makePConnect = (value = '') => () => ({
+const makePConnect = () => () => ({
   getStateProps: () => ({ value: '.SSN' }),
   getActionsApi: () => ({
     updateFieldValue: jest.fn(),
@@ -31,7 +31,7 @@ describe('DevDXExtensionsSSNField', () => {
       <DevDXExtensionsSSNField
         label='SSN'
         value='123456789'
-        getPConnect={makePConnect('123456789')}
+        getPConnect={makePConnect()}
         testId='ssn-masked'
       />
     );
@@ -45,7 +45,7 @@ describe('DevDXExtensionsSSNField', () => {
       <DevDXExtensionsSSNField
         label='SSN'
         value='123456789'
-        getPConnect={makePConnect('123456789')}
+        getPConnect={makePConnect()}
         testId='ssn-reveal'
       />
     );
@@ -59,7 +59,7 @@ describe('DevDXExtensionsSSNField', () => {
       <DevDXExtensionsSSNField
         label='SSN'
         value='123456789'
-        getPConnect={makePConnect('123456789')}
+        getPConnect={makePConnect()}
         testId='ssn-toggle'
       />
     );
@@ -74,7 +74,7 @@ describe('DevDXExtensionsSSNField', () => {
         label='SSN'
         value='123456789'
         displayMode='DISPLAY_ONLY'
-        getPConnect={makePConnect('123456789')}
+        getPConnect={makePConnect()}
         testId='ssn-display'
       />
     );
@@ -88,7 +88,7 @@ describe('DevDXExtensionsSSNField', () => {
         label='SSN'
         value='123'
         validatemessage='Please enter a valid 9-digit SSN'
-        getPConnect={makePConnect('123')}
+        getPConnect={makePConnect()}
         testId='ssn-error'
       />
     );
@@ -101,7 +101,7 @@ describe('DevDXExtensionsSSNField', () => {
         label='SSN'
         value='123456789'
         readOnly
-        getPConnect={makePConnect('123456789')}
+        getPConnect={makePConnect()}
         testId='ssn-readonly'
       />
     );

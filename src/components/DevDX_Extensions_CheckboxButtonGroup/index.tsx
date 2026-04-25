@@ -85,7 +85,7 @@ export const DevDXExtensionsCheckboxButtonGroup = (props: CheckboxButtonGroupPro
     if (readOnly || disabled) return;
     setSelected(prev => {
       const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
+      if (next.has(key)) { next.delete(key); } else { next.add(key); }
       const newValue = serialise(next);
       actions.updateFieldValue(propName, newValue);
       hasValueChange.current = true;
@@ -96,7 +96,7 @@ export const DevDXExtensionsCheckboxButtonGroup = (props: CheckboxButtonGroupPro
   const handleBlur = () => {
     if (hasValueChange.current && !readOnly) {
       actions.triggerFieldChange(propName, serialise(selected));
-      if (hasSuggestions) pConn.ignoreSuggestion();
+      if (hasSuggestions) (pConn as any).ignoreSuggestion();
       hasValueChange.current = false;
     }
   };
@@ -134,7 +134,7 @@ export const DevDXExtensionsCheckboxButtonGroup = (props: CheckboxButtonGroupPro
       <StyledButtonGroup
         role='group'
         aria-label={label}
-        aria-required={required || undefined}
+        data-required={required || undefined}
         data-status={status}
       >
         {options.map(option => {

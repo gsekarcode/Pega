@@ -53,7 +53,7 @@ export const DevDXExtensionsSSNField = (props: SSNFieldProps) => {
   const [inputValue, setInputValue] = useState(formatSSN(String(value ?? '')));
   const [isVisible, setIsVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [status, setStatus] = useState<string | undefined>(hasSuggestions ? 'pending' : undefined);
+  const [status, setStatus] = useState<'pending' | 'error' | 'success' | 'warning' | undefined>(hasSuggestions ? 'pending' : undefined);
 
   useEffect(() => {
     setInputValue(formatSSN(String(value ?? '')));
@@ -123,7 +123,7 @@ export const DevDXExtensionsSSNField = (props: SSNFieldProps) => {
           setIsFocused(false);
           if ((!value || hasValueChange.current) && !readOnly) {
             actions.triggerFieldChange(propName, inputValue);
-            if (hasSuggestions) pConn.ignoreSuggestion();
+            if (hasSuggestions) (pConn as any).ignoreSuggestion();
             hasValueChange.current = false;
           }
         }}

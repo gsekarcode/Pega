@@ -24,7 +24,7 @@ function DevDXExtensionsForm1(props: DevDXExtensionsForm1Props) {
   const propsToUse = { label, showLabel, ...getPConnect().getInheritedProps() };
 
   // determine column widths from props or inherited props (defaults 25% / 75%)
-  const inherited = getPConnect().getInheritedProps() || {};
+  const inherited = (getPConnect().getInheritedProps() || {}) as any;
   const rawLeft = (props as any).leftColWidth ?? inherited.leftColWidth ?? '25%';
   const rawRight = (props as any).rightColWidth ?? inherited.rightColWidth ?? '75%';
   const normalizeWidth = (w: string) => {
@@ -45,7 +45,7 @@ function DevDXExtensionsForm1(props: DevDXExtensionsForm1Props) {
     return (
       <StyledDevDXExtensionsForm1Wrapper>
         <FieldGroup name={propsToUse.showLabel ? propsToUse.label : ''}>
-          <Grid container={gridContainer} data-testid={`column-count-2`}>
+          <Grid container={gridContainer} data-testid="column-count-2">
             {children.map((child: any, i: number) => (
               <Flex
                 // @ts-ignore

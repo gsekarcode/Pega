@@ -8,7 +8,7 @@
   "allowedApplications": [],
   "componentKey": "DevDX_Extensions_KPICard",
   "type": "Field",
-  "subtype": "DISPLAY",
+  "subtype": "Text",
   "icon": "images/pz-text.svg",
   "properties": [
     {

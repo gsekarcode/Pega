@@ -69,14 +69,13 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
   // Advance the flow to the next screen (or submit on the last screen)
   const handleNext = () => {
     pConn.getActionsApi().finishAssignment(contextName, {
-      outcomeID: '',
-      jsActionQueryParams: {}
+      outcomeID: ''
     });
   };
 
   // Go back to the previous screen by cancelling the current assignment
   const handlePrevious = () => {
-    pConn.getActionsApi().cancelAction(contextName);
+    (pConn.getActionsApi() as any).cancelAction(contextName);
   };
 
   // Cancel the entire flow
@@ -94,12 +93,16 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
         <StyledStepper role='list' aria-label='Form progress'>
           {steps.map((label, i) => {
             const state = getStepState(i);
+            const connectorState = state === 'upcoming' && i >= currentStep ? 'upcoming' : 'done';
+            let stepSuffix = '';
+            if (state === 'complete') stepSuffix = ' (completed)';
+            else if (state === 'active') stepSuffix = ' (current)';
             return (
               <StyledStep key={label} role='listitem'>
-                {i > 0 && <StyledStepConnector data-state={state === 'upcoming' && i >= currentStep ? 'upcoming' : 'done'} />}
+                {i > 0 && <StyledStepConnector data-state={connectorState} />}
                 <StyledStepCircle
                   data-state={state}
-                  aria-label={`Step ${i + 1}: ${label}${state === 'complete' ? ' (completed)' : state === 'active' ? ' (current)' : ''}`}
+                  aria-label={`Step ${i + 1}: ${label}${stepSuffix}`}
                 >
                   {state === 'complete' ? '✓' : i + 1}
                 </StyledStepCircle>

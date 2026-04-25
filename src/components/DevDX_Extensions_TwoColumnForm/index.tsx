@@ -23,7 +23,7 @@ const normalizeWidth = (raw: string | undefined, fallback: string): string => {
 function DevDXExtensionsTwoColumnForm(props: TwoColumnFormProps) {
   const { getPConnect, label = '', showLabel = true, children = [] } = props;
 
-  const inherited = getPConnect().getInheritedProps() || {};
+  const inherited = (getPConnect().getInheritedProps() || {}) as any;
   const propsToUse = { label, showLabel, ...inherited };
 
   const leftWidth = normalizeWidth(

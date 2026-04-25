@@ -7,7 +7,6 @@ interface DevDXExtensionsLayout1Props extends PConnLayoutProps {
   layoutMode?: 'TWO_COLUMN' | 'THREE_COLUMN' | 'SINGLE_COLUMN';
   columnGap?: string;
   rowGap?: string;
-  columnWidth?: string;
   children?: any[];
 }
 
@@ -26,7 +25,7 @@ function DevDXExtensionsLayout1(props: DevDXExtensionsLayout1Props) {
   } = props;
 
   // Get inherited props from the parent component
-  const inherited = getPConnect().getInheritedProps() || {};
+  const inherited = (getPConnect().getInheritedProps() || {}) as any;
   const mode = (layoutMode as string) || inherited.layoutMode || 'TWO_COLUMN';
 
   // Normalize spacing values
@@ -54,15 +53,18 @@ function DevDXExtensionsLayout1(props: DevDXExtensionsLayout1Props) {
       }}
       data-testid={`layout-${mode}`}
     >
-      {children.map((child: any, index: number) => (
-        <div
-          key={`region-${index}`}
-          className="layout-region"
-          data-testid={`layout-region-${index}`}
-        >
-          {child}
-        </div>
-      ))}
+      {children.map((child: any, index: number) => {
+        const regionKey = `region-${mode}-${index}`;
+        return (
+          <div
+            key={regionKey}
+            className="layout-region"
+            data-testid={`layout-region-${index}`}
+          >
+            {child}
+          </div>
+        );
+      })}
     </StyledLayout>
   );
 }

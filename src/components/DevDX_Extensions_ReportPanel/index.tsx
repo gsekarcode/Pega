@@ -84,7 +84,7 @@ function DevDXExtensionsReportPanel(props: ReportPanelProps) {
       .catch(() => setError(`Failed to load data page: ${dataPageName}`));
   }, [dataPageName, getPConnect, stat1Label, stat1Value, stat1Color, stat2Label, stat2Value, stat2Color, stat3Label, stat3Value, stat3Color]);
 
-  const makePConnect = () => () => ({ getInheritedProps: () => ({}) });
+  const makePConnect = () => (() => ({ getInheritedProps: () => ({}) })) as any;
 
   return (
     <StyledWrapper data-testid='report-panel'>

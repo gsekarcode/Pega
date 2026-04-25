@@ -8,7 +8,7 @@
   "allowedApplications": [],
   "componentKey": "DevDX_Extensions_SideNavLayout",
   "type": "Template",
-  "subtype": "LAYOUT",
+  "subtype": "PAGE",
   "icon": "images/pz-two-column.svg",
   "properties": [
     {

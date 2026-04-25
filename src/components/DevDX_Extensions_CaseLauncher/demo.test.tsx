@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { DevDXExtensionsCaseLauncher, CASE_REQUEST_EVENT } from './index';
 
 const makeCreateWork = () => jest.fn();
-const makePublish = () => jest.fn();
 
 // Helper: build a PCore mock with a controllable publish return value.
 // publish() returning undefined simulates "no subscribers" → falls back to createWork.

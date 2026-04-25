@@ -48,9 +48,7 @@ describe('DevDXExtensionsScreenFlowForm', () => {
         {fields}
       </DevDXExtensionsScreenFlowForm>
     );
-    const circles = screen.getAllByRole('listitem').map(li =>
-      li.querySelector('[data-state]')
-    );
+    const circles = screen.getAllByLabelText(/^Step \d/);
     expect(circles[0]).toHaveAttribute('data-state', 'complete');
     expect(circles[1]).toHaveAttribute('data-state', 'active');
     expect(circles[2]).toHaveAttribute('data-state', 'upcoming');

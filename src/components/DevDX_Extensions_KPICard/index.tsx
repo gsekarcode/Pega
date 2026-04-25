@@ -13,7 +13,7 @@ interface KPICardProps extends PConnProps {
 function DevDXExtensionsKPICard(props: KPICardProps) {
   const { getPConnect, label = '', value = '', color = '#2563eb' } = props;
 
-  const inherited = getPConnect().getInheritedProps() || {};
+  const inherited = (getPConnect().getInheritedProps() || {}) as any;
   const resolvedLabel = label || inherited.label || '';
   const resolvedValue = value || inherited.value || '';
   const resolvedColor = color || inherited.color || '#2563eb';
