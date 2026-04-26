@@ -2,7 +2,7 @@ import styled, { css, createGlobalStyle } from 'styled-components';
 
 // Hides Pega's default action bar (Submit/Cancel buttons) rendered by the harness
 export const HideActionButtons = createGlobalStyle`
-  main article form ~ div:last-child {
+  main article form > div:nth-child(2) {
     display: none;
   }
 `;
