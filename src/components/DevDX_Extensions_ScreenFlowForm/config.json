@@ -80,6 +80,7 @@
     "showNavigationButtons": true,
     "labelPrevious": "Previous",
     "labelNext": "Next",
-    "labelSubmit": "Submit"
+    "labelSubmit": "Submit",
+    "showActionsInFooter": false
   }
 }

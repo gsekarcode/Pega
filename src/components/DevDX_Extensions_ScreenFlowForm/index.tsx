@@ -11,7 +11,8 @@ import {
   StyledStepConnector,
   StyledHeading,
   StyledFieldsWrapper,
-  StyledActionBar
+  StyledActionBar,
+  HideActionButtons
 } from './styles';
 
 interface ScreenFlowFormProps extends PConnProps {
@@ -73,9 +74,9 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
     });
   };
 
-  // Go back to the previous screen by cancelling the current assignment
+  // Go back to the previous screen
   const handlePrevious = () => {
-    (pConn.getActionsApi() as any).cancelAction(contextName);
+    pConn.getActionsApi().navigateToStep('previous', contextName);
   };
 
   // Cancel the entire flow
@@ -88,6 +89,7 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
 
   return (
     <StyledWrapper>
+      <HideActionButtons />
       {/* ── Step progress indicator ─────────────────────────────────────── */}
       {showStepProgress && steps.length > 1 && (
         <StyledStepper role='list' aria-label='Form progress'>
