@@ -8,6 +8,9 @@ export const HideActionButtons = createGlobalStyle`
   main article form > div > div:nth-child(2) {
     display: none;
   }
+  main article form > div > div {
+    display: none;
+  }
 `;
 
 // ── Outer container ───────────────────────────────────────────────────────────
