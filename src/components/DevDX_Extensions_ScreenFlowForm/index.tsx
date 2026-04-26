@@ -7,7 +7,6 @@ import {
   StyledStepper,
   StyledStep,
   StyledStepCircle,
-  StyledStepLabel,
   StyledStepConnector,
   StyledHeading,
   StyledFieldsWrapper,
@@ -106,9 +105,9 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
                   data-state={state}
                   aria-label={`Step ${i + 1}: ${label}${stepSuffix}`}
                 >
-                  {state === 'complete' ? '✓' : i + 1}
+                  <span>{state === 'complete' ? '✓' : i + 1}</span>
+                  <span>{label}</span>
                 </StyledStepCircle>
-                <StyledStepLabel data-state={state}>{label}</StyledStepLabel>
               </StyledStep>
             );
           })}
