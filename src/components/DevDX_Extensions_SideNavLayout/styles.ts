@@ -1,31 +1,33 @@
 import styled, { css } from 'styled-components';
 
-// Outer flex row — full height of the container
+// Outer flex row — stretches to full viewport height
 export const StyledWrapper = styled.div(() =>
   css`
     display: flex;
     flex-direction: row;
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
+    align-items: stretch;
   `
 );
 
-// Left sidebar — fixed width, scrollable if content overflows
+// Left sidebar — dark blue, full height
 export const StyledLeftPanel = styled.nav(() =>
   css`
     width: 240px;
     flex-shrink: 0;
-    border-right: 1px solid #e5e7eb;
+    background: #0f172a;
     display: flex;
     flex-direction: column;
     padding: 0.5rem 0;
     box-sizing: border-box;
     overflow-y: auto;
+    align-self: stretch;
   `
 );
 
-// Individual nav button — full-width, left-aligned, left-accent on active
+// Individual nav button — white text on dark blue
 export const StyledNavItem = styled.button(() =>
   css`
     display: block;
@@ -37,24 +39,25 @@ export const StyledNavItem = styled.button(() =>
     border-left: 3px solid transparent;
     cursor: pointer;
     font-size: 0.9375rem;
-    color: #374151;
+    color: #cbd5e1;
     line-height: 1.4;
     box-sizing: border-box;
-    transition: background 0.1s ease, border-color 0.1s ease;
+    transition: background 0.15s ease, border-color 0.15s ease;
 
     &[data-active='true'] {
-      background: #eff6ff;
-      border-left-color: #2563eb;
+      background: #1e3a5f;
+      border-left-color: #60a5fa;
       font-weight: 600;
-      color: #1d4ed8;
+      color: #ffffff;
     }
 
     &:hover:not([data-active='true']) {
-      background: #f3f4f6;
+      background: #1e293b;
+      color: #ffffff;
     }
 
     &:focus-visible {
-      outline: 2px solid #2563eb;
+      outline: 2px solid #60a5fa;
       outline-offset: -2px;
     }
   `
