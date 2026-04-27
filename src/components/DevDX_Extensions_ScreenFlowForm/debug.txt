@@ -1,0 +1,4 @@
+document.querySelectorAll('main article form > div > div:nth-child(2)')
+document.querySelectorAll('main article form > div > div:nth-child(2)').forEach(el => el.style.display = 'none')
+document.querySelector('main article form').innerHTML
+document.querySelectorAll('main article form > div > div:nth-child(2)')
