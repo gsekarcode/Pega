@@ -17,7 +17,7 @@ export const StyledLeftPanel = styled.nav(() =>
   css`
     width: 240px;
     flex-shrink: 0;
-    background: #0f172a;
+    background: #1e40af;
     display: flex;
     flex-direction: column;
     padding: 0.5rem 0;
@@ -45,19 +45,19 @@ export const StyledNavItem = styled.button(() =>
     transition: background 0.15s ease, border-color 0.15s ease;
 
     &[data-active='true'] {
-      background: #1e3a5f;
-      border-left-color: #60a5fa;
+      background: #1d4ed8;
+      border-left-color: #bfdbfe;
       font-weight: 600;
       color: #ffffff;
     }
 
     &:hover:not([data-active='true']) {
-      background: #1e293b;
+      background: #2563eb;
       color: #ffffff;
     }
 
     &:focus-visible {
-      outline: 2px solid #60a5fa;
+      outline: 2px solid #bfdbfe;
       outline-offset: -2px;
     }
   `
