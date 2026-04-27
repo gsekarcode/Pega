@@ -1,10 +1,14 @@
 import styled, { css, createGlobalStyle } from 'styled-components';
 
-// Hides Pega's default action bar and header rendered by the harness
+// Hides Pega's default action bar (Submit/Cancel buttons)
 export const HideActionButtons = createGlobalStyle`
   main article form > div > div:nth-child(2) {
     display: none;
   }
+`;
+
+// Hides Pega's default step progress / header
+export const HideStepProgress = createGlobalStyle`
   main article form > div > div {
     display: none;
   }

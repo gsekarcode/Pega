@@ -11,7 +11,8 @@ import {
   StyledHeading,
   StyledFieldsWrapper,
   StyledActionBar,
-  HideActionButtons
+  HideActionButtons,
+  HideStepProgress
 } from './styles';
 
 interface ScreenFlowFormProps extends PConnProps {
@@ -89,6 +90,7 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
   return (
     <StyledWrapper>
       <HideActionButtons />
+      <HideStepProgress />
       {/* ── Step progress indicator ─────────────────────────────────────── */}
       {showStepProgress && steps.length > 1 && (
         <StyledStepper role='list' aria-label='Form progress'>
