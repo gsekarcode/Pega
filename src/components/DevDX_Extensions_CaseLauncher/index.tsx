@@ -57,11 +57,11 @@ export const DevDXExtensionsCaseLauncher = (props: CaseLauncherProps) => {
       CASE_REQUEST_EVENT,
       { className, flowType: 'pyStartCase' }
     );
-    // publish() returns undefined when no subscribers — fall back to primary
+    // publish() returns undefined when no subscribers — fall back to modal
     if (!published) {
       pConn.getActionsApi().createWork(className, {
         flowType: 'pyStartCase',
-        containerName: 'primary',
+        containerName: 'modal',
         openCaseViewAfterCreate: true
       });
     }
