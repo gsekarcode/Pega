@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import type { PConnProps } from './PConnProps';
 type Variant = 'primary' | 'secondary' | 'simple';
 type Size = 'default' | 'compact';

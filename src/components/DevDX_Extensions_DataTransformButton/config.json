@@ -8,7 +8,7 @@
   "allowedApplications": [],
   "componentKey": "DevDX_Extensions_DataTransformButton",
   "type": "Field",
-  "subtype": "CASE",
+  "subtype": "Text",
   "icon": "images/pz-button.svg",
   "properties": [
     {

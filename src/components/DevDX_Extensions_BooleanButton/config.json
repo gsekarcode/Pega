@@ -1,0 +1,102 @@
+{
+  "name": "DevDX_Extensions_BooleanButton",
+  "label": "Boolean Button",
+  "description": "Boolean field displayed as a button. Enabled when false, disabled when true.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_BooleanButton",
+  "type": "Field",
+  "subtype": "Boolean",
+  "icon": "images/pz-button.svg",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT",
+      "required": true
+    },
+    {
+      "name": "value",
+      "label": "Value",
+      "format": "PROPERTY",
+      "required": true
+    },
+    {
+      "label": "Button labels",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "labelFalse",
+          "label": "Label when false (enabled)",
+          "format": "TEXT",
+          "defaultValue": "Confirm"
+        },
+        {
+          "name": "labelTrue",
+          "label": "Label when true (disabled)",
+          "format": "TEXT",
+          "defaultValue": "Confirmed"
+        }
+      ]
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "readOnly",
+          "label": "Edit mode",
+          "format": "READONLY"
+        },
+        {
+          "name": "disabled",
+          "label": "Disabled",
+          "format": "DISABLED"
+        },
+        {
+          "name": "required",
+          "label": "Required",
+          "format": "REQUIRED"
+        },
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    },
+    {
+      "label": "Advanced",
+      "format": "GROUP",
+      "collapsible": true,
+      "properties": [
+        {
+          "name": "helperText",
+          "label": "Helper text",
+          "format": "TEXT"
+        },
+        {
+          "name": "hideLabel",
+          "label": "Hide label",
+          "format": "BOOLEAN",
+          "defaultValue": false
+        },
+        {
+          "name": "testId",
+          "label": "Test ID",
+          "format": "TEXT",
+          "ignorePattern": "[^-_\\p{N}\\p{L}]",
+          "includeAnnotations": false
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "label": "@L $this.label",
+    "labelFalse": "Confirm",
+    "labelTrue": "Confirmed",
+    "detailFVLItem": true
+  }
+}

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import './create-nonce';
 export declare const CASE_REQUEST_EVENT = "G_EXTENSIONS_OPEN_CASE_IN_PANEL";
 export type CaseLauncherProps = {

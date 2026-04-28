@@ -1,0 +1,1 @@
+{"version":3,"file":"Operator.d.ts","sourceRoot":"","sources":["../../../src/components/DevDX_Extensions_DetailsLayout/Operator.tsx"],"names":[],"mappings":";AAgBA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,cAAc,CAAC;AAMpD,UAAU,yCAA0C,SAAQ,eAAe;IAEzE,IAAI,EAAE,MAAM,CAAC;IACb,EAAE,EAAE,MAAM,CAAC;IACX,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,EAAE,GAAG,CAAC;IACb,YAAY,EAAE,GAAG,CAAC;CACnB;;AAyLD,wBAA2C"}
