@@ -19,7 +19,7 @@ export const StyledRequired = styled.span(() => css`
 
 export const StyledButtonRow = styled.div(() => css`
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 10px;
 `);
 
@@ -32,12 +32,11 @@ export const StyledToggleButton = styled.button<{ $active: boolean }>(
     border-radius: 6px;
     font-size: 0.875rem;
     font-weight: 600;
-    cursor: ${$active ? 'not-allowed' : 'pointer'};
-    border: 2px solid ${$active ? '#16a34a' : '#2563eb'};
-    background: ${$active ? '#f0fdf4' : '#2563eb'};
-    color: ${$active ? '#16a34a' : '#ffffff'};
-    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
-    opacity: ${$active ? 0.75 : 1};
+    cursor: pointer;
+    border: 2px solid #2563eb;
+    background: ${$active ? '#1d4ed8' : '#2563eb'};
+    color: #ffffff;
+    transition: background 0.18s ease;
     outline: none;
 
     &:focus-visible {

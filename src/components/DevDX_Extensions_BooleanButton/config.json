@@ -1,7 +1,7 @@
 {
   "name": "DevDX_Extensions_BooleanButton",
   "label": "Boolean Button",
-  "description": "Boolean field displayed as a button. Enabled when false, disabled when true.",
+  "description": "Boolean button",
   "organization": "DevDX",
   "version": "1.0.0",
   "library": "Extensions",

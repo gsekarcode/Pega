@@ -22,12 +22,6 @@ const coerceBool = (val: any): boolean => {
   return Boolean(val);
 };
 
-const CheckIcon = () => (
-  <svg viewBox='0 0 16 16' aria-hidden='true'>
-    <polyline points='3 8 6.5 11.5 13 4.5' />
-  </svg>
-);
-
 export const DevDXExtensionsBooleanButton = (props: BooleanButtonProps) => {
   const {
     getPConnect,
@@ -38,8 +32,8 @@ export const DevDXExtensionsBooleanButton = (props: BooleanButtonProps) => {
     validatemessage = '',
     testId = '',
     displayMode,
-    labelFalse = 'Confirm',
-    labelTrue = 'Confirmed'
+    labelFalse = 'No',
+    labelTrue = 'Yes'
   } = props;
 
   const isActive = coerceBool(value);
@@ -54,13 +48,12 @@ export const DevDXExtensionsBooleanButton = (props: BooleanButtonProps) => {
   const propName = (pConn as any).getStateProps().value;
 
   const handleClick = () => {
-    if (isActive || disabled || readOnly) return;
-    const newValue = true;
+    if (disabled || readOnly) return;
+    const newValue = !isActive;
     actions.updateFieldValue(propName, newValue);
     actions.triggerFieldChange(propName, newValue);
   };
 
-  // ── Display-only modes ──────────────────────────────────────────────────────
   if (displayMode === 'DISPLAY_ONLY') {
     return (
       <StyledDisplayValue $active={isActive} data-testid={testId}>
@@ -86,7 +79,6 @@ export const DevDXExtensionsBooleanButton = (props: BooleanButtonProps) => {
     );
   }
 
-  // ── Editable mode ───────────────────────────────────────────────────────────
   return (
     <StyledWrapper data-testid={testId}>
       {!hideLabel && (
@@ -100,12 +92,11 @@ export const DevDXExtensionsBooleanButton = (props: BooleanButtonProps) => {
         <StyledToggleButton
           type='button'
           $active={isActive}
-          disabled={isActive || disabled || readOnly}
+          disabled={disabled || readOnly}
           onClick={handleClick}
           aria-pressed={isActive}
           aria-label={isActive ? labelTrue : labelFalse}
         >
-          {isActive && <CheckIcon />}
           {isActive ? labelTrue : labelFalse}
         </StyledToggleButton>
       </StyledButtonRow>
