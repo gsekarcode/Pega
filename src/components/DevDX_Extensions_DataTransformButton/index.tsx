@@ -51,21 +51,32 @@ function DevDXExtensionsDataTransformButton(props: DataTransformButtonProps) {
       return;
     }
 
-    const pConn       = getPConnect();
-    const contextName = pConn.getContextName();
-    const PCore       = (window as any).PCore;
-
-    if (!PCore) {
-      setFeedback({ type: 'error', message: 'PCore not available.' });
-      return;
-    }
+    const pConn = getPConnect();
 
     setLoading(true);
     setFeedback(null);
 
     try {
-      // Standard Constellation API to invoke a Data Transform on the active case
-      await pConn.getActionsApi().runDataTransform(dataTransformName, contextName);
+      // Resolve the case ID from the active context
+      const caseSummary = pConn.getCaseSummary();
+      const caseID: string = caseSummary?.content?.caseID ?? caseSummary?.ID ?? '';
+
+      if (!caseID) throw new Error('Could not resolve case ID from context.');
+
+      // DX API v2: PATCH /cases/{ID} with dataTransformName runs the transform
+      // and returns an updated case view without navigating away
+      await pConn.getActionsApi().invoke(
+        `/api/application/v2/cases/${encodeURIComponent(caseID)}`,
+        {
+          method: 'PATCH',
+          body: {
+            content: {},
+            pageInstructions: [],
+            dataTransformName
+          }
+        }
+      );
+
       if (showFeedback) {
         setFeedback({ type: 'success', message: labelSuccess });
         setTimeout(() => setFeedback(null), 4000);
