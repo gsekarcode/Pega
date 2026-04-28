@@ -1,7 +1,7 @@
 export const mockPConnect = () => ({
   getContextName: () => 'app/primary_1',
+  getCaseSummary: () => ({ content: { caseID: 'MOCK-APP-WORK M-1001' } }),
   getActionsApi: () => ({
-    runDataTransform: (_name: string, _ctx: string) =>
-      new Promise<void>(resolve => setTimeout(resolve, 1200))
+    invoke: () => new Promise<void>(resolve => { setTimeout(resolve, 1200); })
   })
 });
