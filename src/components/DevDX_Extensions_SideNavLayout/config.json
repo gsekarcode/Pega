@@ -32,7 +32,7 @@
       "name": "Slot2",
       "label": "Item 2 — content",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Views", "Fields", "Widgets"]
+      "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
     },
     {
       "name": "navLabel3",
@@ -43,7 +43,7 @@
       "name": "Slot3",
       "label": "Item 3 — content",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Views", "Fields", "Widgets"]
+      "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
     },
     {
       "name": "navLabel4",
@@ -54,7 +54,7 @@
       "name": "Slot4",
       "label": "Item 4 — content",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Views", "Fields", "Widgets"]
+      "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
     },
     {
       "name": "navLabel5",
@@ -65,7 +65,7 @@
       "name": "Slot5",
       "label": "Item 5 — content",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Views", "Fields", "Widgets"]
+      "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
     }
   ]
 }
