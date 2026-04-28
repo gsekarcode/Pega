@@ -12,12 +12,8 @@ import {
 } from './styles';
 
 interface BooleanButtonProps extends PConnFieldProps {
-  /** Button label when value is false (default state) */
   labelFalse?: string;
-  /** Button label when value is true (confirmed state) */
   labelTrue?: string;
-  /** Visual variant of the button */
-  variant?: 'primary' | 'secondary';
 }
 
 const coerceBool = (val: any): boolean => {
@@ -114,12 +110,8 @@ export const DevDXExtensionsBooleanButton = (props: BooleanButtonProps) => {
         </StyledToggleButton>
       </StyledButtonRow>
 
-      {validatemessage
-        ? <StyledErrorText role='alert'>{validatemessage}</StyledErrorText>
-        : helperText
-          ? <StyledHelperText>{helperText}</StyledHelperText>
-          : null
-      }
+      {validatemessage && <StyledErrorText role='alert'>{validatemessage}</StyledErrorText>}
+      {!validatemessage && helperText && <StyledHelperText>{helperText}</StyledHelperText>}
     </StyledWrapper>
   );
 };
