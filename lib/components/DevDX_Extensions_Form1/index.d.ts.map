@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../src/components/DevDX_Extensions_Form1/index.tsx"],"names":[],"mappings":";AAGA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,cAAc,CAAC;AACpD,OAAO,gBAAgB,CAAC;AAMxB,UAAU,yBAA0B,SAAQ,eAAe;IAEzD,SAAS,EAAE,OAAO,CAAC;IACnB,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,QAAQ,EAAE,GAAG,CAAC;CACf;;AA+DD,wBAAuD"}

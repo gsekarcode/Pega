@@ -135,3 +135,23 @@ export const StyledActionBar = styled.div(() =>
     gap: 0.5rem;
   `
 );
+
+// ── Header region (above stepper) ─────────────────────────────────────────────
+export const StyledHeaderSection = styled.div(() =>
+  css`
+    width: 100%;
+    box-sizing: border-box;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+  `
+);
+
+// ── Footer region (below action bar) ─────────────────────────────────────────
+export const StyledFooterSection = styled.div(() =>
+  css`
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e5e7eb;
+  `
+);

@@ -11,6 +11,8 @@ import {
   StyledHeading,
   StyledFieldsWrapper,
   StyledActionBar,
+  StyledHeaderSection,
+  StyledFooterSection,
   HideActionButtons,
   HideStepProgress
 } from './styles';
@@ -26,7 +28,14 @@ interface ScreenFlowFormProps extends PConnProps {
   labelPrevious?: string;
   labelNext?: string;
   labelSubmit?: string;
-  children?: any;
+  /** Bind to a property or condition — when true the Next/Submit button is disabled */
+  disableNext?: boolean | string;
+  /** Show the header region (above step progress) */
+  showHeader?: boolean | string;
+  /** Show the footer region (below navigation buttons) */
+  showFooter?: boolean | string;
+  /** children[0]=Header region, children[1]=Fields region, children[2]=Footer region */
+  children?: any[];
 }
 
 const coerceBool = (val: boolean | string | undefined, fallback: boolean): boolean => {
@@ -48,11 +57,19 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
     labelPrevious = 'Previous',
     labelNext = 'Next',
     labelSubmit = 'Submit',
-    children
+    children = []
   } = props;
 
-  const showStepProgress = coerceBool(props.showStepProgress, true);
+  const showStepProgress      = coerceBool(props.showStepProgress, true);
   const showNavigationButtons = coerceBool(props.showNavigationButtons, true);
+  const disableNext           = coerceBool(props.disableNext, false);
+  const showHeader            = coerceBool(props.showHeader, false);
+  const showFooter            = coerceBool(props.showFooter, false);
+
+  // Region slots: [0] Header, [1] Fields, [2] Footer
+  const headerRegion = children[0];
+  const fieldsRegion = children[1] ?? children[0]; // fallback for single-region legacy use
+  const footerRegion = children[2];
   const currentStep = coerceInt(props.currentStep, 1);
 
   const steps = String(stepLabels)
@@ -91,6 +108,14 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
     <StyledWrapper>
       <HideActionButtons />
       <HideStepProgress />
+
+      {/* ── Header region ───────────────────────────────────────────────── */}
+      {showHeader && headerRegion && (
+        <StyledHeaderSection data-testid='screen-flow-header'>
+          {headerRegion}
+        </StyledHeaderSection>
+      )}
+
       {/* ── Step progress indicator ─────────────────────────────────────── */}
       {showStepProgress && steps.length > 1 && (
         <StyledStepper role='list' aria-label='Form progress'>
@@ -123,7 +148,7 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
 
       {/* ── Form fields for this screen ─────────────────────────────────── */}
       <StyledFieldsWrapper data-testid='screen-flow-fields'>
-        {children}
+        {fieldsRegion}
       </StyledFieldsWrapper>
 
       {/* ── Navigation buttons ──────────────────────────────────────────── */}
@@ -138,11 +163,23 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
             )}
 
             {/* Next on middle steps, Submit on the last step */}
-            <Button variant='primary' onClick={handleNext} data-testid={isLastStep ? 'btn-submit' : 'btn-next'}>
+            <Button
+              variant='primary'
+              onClick={handleNext}
+              disabled={disableNext}
+              data-testid={isLastStep ? 'btn-submit' : 'btn-next'}
+            >
               {isLastStep ? labelSubmit : labelNext}
             </Button>
           </div>
         </StyledActionBar>
+      )}
+
+      {/* ── Footer region ───────────────────────────────────────────────── */}
+      {showFooter && footerRegion && (
+        <StyledFooterSection data-testid='screen-flow-footer'>
+          {footerRegion}
+        </StyledFooterSection>
       )}
     </StyledWrapper>
   );

@@ -1,0 +1,52 @@
+{
+  "name": "DevDX_Extensions_CollapsibleLayout",
+  "label": "Collapsible Layout",
+  "description": "A layout container that can be toggled collapsed or expanded by the user",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_CollapsibleLayout",
+  "type": "Template",
+  "subtype": "Form",
+  "icon": "DefaultLayout.svg",
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Section Heading",
+      "format": "TEXT",
+      "defaultValue": "Section"
+    },
+    {
+      "name": "headerBackground",
+      "label": "Header Background",
+      "format": "COLOR",
+      "defaultValue": "#f8f9fa"
+    },
+    {
+      "name": "collapsible",
+      "label": "Collapsible",
+      "format": "BOOLEAN",
+      "defaultValue": "false"
+    },
+    {
+      "name": "defaultBehaviour",
+      "label": "Default behaviour (when collapsible)",
+      "format": "SELECT",
+      "defaultValue": "expanded",
+      "source": [
+        { "key": "expanded", "value": "Expanded" },
+        { "key": "collapsed", "value": "Collapsed" }
+      ]
+    },
+    {
+      "format": "INSTRUCTIONS"
+    },
+    {
+      "name": "Regions",
+      "label": "Regions",
+      "format": "CONTENTPICKER",
+      "allowCreatingGroup": true
+    }
+  ]
+}

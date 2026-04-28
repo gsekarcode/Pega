@@ -1,0 +1,87 @@
+{
+  "name": "DevDX_Extensions_DataTransformButton",
+  "label": "Data Transform Button",
+  "description": "A button that invokes a Pega Data Transform on click",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_DataTransformButton",
+  "type": "Field",
+  "subtype": "CASE",
+  "icon": "images/pz-button.svg",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Button label",
+      "format": "TEXT",
+      "defaultValue": "Run"
+    },
+    {
+      "name": "dataTransformName",
+      "label": "Data Transform name",
+      "format": "TEXT",
+      "defaultValue": ""
+    },
+    {
+      "label": "Appearance",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "variant",
+          "label": "Variant",
+          "format": "SELECT",
+          "defaultValue": "primary",
+          "source": [
+            { "key": "primary",   "value": "Primary"   },
+            { "key": "secondary", "value": "Secondary" },
+            { "key": "simple",    "value": "Simple"    }
+          ]
+        },
+        {
+          "name": "size",
+          "label": "Size",
+          "format": "SELECT",
+          "defaultValue": "default",
+          "source": [
+            { "key": "default", "value": "Default" },
+            { "key": "compact", "value": "Compact" }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Feedback",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "showFeedback",
+          "label": "Show inline feedback",
+          "format": "BOOLEAN",
+          "defaultValue": true
+        },
+        {
+          "name": "labelLoading",
+          "label": "Loading label",
+          "format": "TEXT",
+          "defaultValue": "Running…"
+        },
+        {
+          "name": "labelSuccess",
+          "label": "Success message",
+          "format": "TEXT",
+          "defaultValue": "Done"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "label": "Run",
+    "dataTransformName": "",
+    "variant": "primary",
+    "size": "default",
+    "showFeedback": true,
+    "labelLoading": "Running…",
+    "labelSuccess": "Done"
+  }
+}

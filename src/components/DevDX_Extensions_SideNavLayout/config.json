@@ -21,7 +21,7 @@
       "name": "Slot1",
       "label": "Item 1 — content",
       "format": "CONTENTPICKER",
-      "addTypeList": ["Views", "Fields", "Widgets"]
+      "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
     },
     {
       "name": "navLabel2",

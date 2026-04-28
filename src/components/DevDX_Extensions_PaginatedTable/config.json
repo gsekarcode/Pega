@@ -1,0 +1,81 @@
+{
+  "name": "DevDX_Extensions_PaginatedTable",
+  "label": "Paginated Table",
+  "description": "Pega Table with built-in pagination and zebra row striping",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_PaginatedTable",
+  "type": "Widget",
+  "subtype": "CASE",
+  "icon": "images/pz-list.svg",
+  "properties": [
+    {
+      "name": "title",
+      "label": "Table title",
+      "format": "TEXT",
+      "defaultValue": ""
+    },
+    {
+      "name": "dataPageName",
+      "label": "Data Page name (list, e.g. D_MyList)",
+      "format": "TEXT",
+      "defaultValue": ""
+    },
+    {
+      "name": "columnsJson",
+      "label": "Columns (JSON)",
+      "format": "TEXT",
+      "defaultValue": "[{\"key\":\"id\",\"label\":\"ID\"},{\"key\":\"name\",\"label\":\"Name\"}]"
+    },
+    {
+      "label": "Pagination",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "pageSize",
+          "label": "Default rows per page",
+          "format": "SELECT",
+          "defaultValue": "10",
+          "source": [
+            { "key": "5",  "value": "5"  },
+            { "key": "10", "value": "10" },
+            { "key": "20", "value": "20" },
+            { "key": "50", "value": "50" }
+          ]
+        },
+        {
+          "name": "showPageSizeSelector",
+          "label": "Show page size selector",
+          "format": "BOOLEAN",
+          "defaultValue": true
+        }
+      ]
+    },
+    {
+      "label": "Display",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "zebra",
+          "label": "Zebra row striping",
+          "format": "BOOLEAN",
+          "defaultValue": true
+        },
+        {
+          "name": "hoverHighlight",
+          "label": "Highlight row on hover",
+          "format": "BOOLEAN",
+          "defaultValue": true
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "pageSize": "10",
+    "showPageSizeSelector": true,
+    "zebra": true,
+    "hoverHighlight": true
+  }
+}
