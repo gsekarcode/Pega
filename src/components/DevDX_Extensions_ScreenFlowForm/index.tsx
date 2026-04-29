@@ -12,8 +12,6 @@ import {
   StyledHeading,
   StyledFieldsWrapper,
   StyledActionBar,
-  StyledHeaderSection,
-  StyledFooterSection,
   HideActionButtons,
   HideStepProgress,
   SHADOW_HIDE_CSS
@@ -32,11 +30,6 @@ interface ScreenFlowFormProps extends PConnProps {
   labelSubmit?: string;
   /** Bind to a property or condition — when true the Next/Submit button is disabled */
   disableNext?: boolean | string;
-  /** Show the header region (above step progress) */
-  showHeader?: boolean | string;
-  /** Show the footer region (below navigation buttons) */
-  showFooter?: boolean | string;
-  /** children[0]=Header region, children[1]=Fields region, children[2]=Footer region */
   children?: any[];
 }
 
@@ -65,13 +58,8 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
   const showStepProgress      = coerceBool(props.showStepProgress, true);
   const showNavigationButtons = coerceBool(props.showNavigationButtons, true);
   const disableNext           = coerceBool(props.disableNext, false);
-  const showHeader            = coerceBool(props.showHeader, false);
-  const showFooter            = coerceBool(props.showFooter, false);
 
-  // Region slots: [0] Header, [1] Fields, [2] Footer
-  const headerRegion = children[0];
-  const fieldsRegion = children[1] ?? children[0]; // fallback for single-region legacy use
-  const footerRegion = children[2];
+  const fieldsRegion = children[0];
   const currentStep = coerceInt(props.currentStep, 1);
 
   const steps = String(stepLabels)
@@ -121,13 +109,6 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
     <StyledWrapper>
       <HideActionButtons />
       <HideStepProgress />
-
-      {/* ── Header region ───────────────────────────────────────────────── */}
-      {showHeader && headerRegion && (
-        <StyledHeaderSection data-testid='screen-flow-header'>
-          {headerRegion}
-        </StyledHeaderSection>
-      )}
 
       {/* ── Step progress indicator ─────────────────────────────────────── */}
       {showStepProgress && steps.length > 1 && (
@@ -188,12 +169,6 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
         </StyledActionBar>
       )}
 
-      {/* ── Footer region ───────────────────────────────────────────────── */}
-      {showFooter && footerRegion && (
-        <StyledFooterSection data-testid='screen-flow-footer'>
-          {footerRegion}
-        </StyledFooterSection>
-      )}
     </StyledWrapper>
   );
 };

@@ -73,50 +73,15 @@
         {
           "name": "disableNext",
           "label": "Disable Next / Submit button",
-          "format": "BOOLEAN",
-          "defaultValue": false
+          "format": "DISABLED"
         }
       ]
-    },
-    {
-      "label": "Header / Footer sections",
-      "format": "GROUP",
-      "properties": [
-        {
-          "name": "showHeader",
-          "label": "Show header section",
-          "format": "BOOLEAN",
-          "defaultValue": false
-        },
-        {
-          "name": "showFooter",
-          "label": "Show footer section",
-          "format": "BOOLEAN",
-          "defaultValue": false
-        }
-      ]
-    },
-    {
-      "name": "Header",
-      "label": "Header (above step progress)",
-      "format": "CONTENTPICKER",
-      "visibility": "($this.showHeader = true)",
-      "addTypeList": ["Fields", "Views", "Widgets"],
-      "allowCreatingGroup": true
     },
     {
       "name": "Fields",
       "label": "Form fields",
       "format": "CONTENTPICKER",
       "addTypeList": ["Fields", "Views"],
-      "allowCreatingGroup": true
-    },
-    {
-      "name": "Footer",
-      "label": "Footer (below navigation buttons)",
-      "format": "CONTENTPICKER",
-      "visibility": "($this.showFooter = true)",
-      "addTypeList": ["Fields", "Views", "Widgets"],
       "allowCreatingGroup": true
     }
   ],
@@ -127,10 +92,6 @@
     "showNavigationButtons": true,
     "labelPrevious": "Previous",
     "labelNext": "Next",
-    "labelSubmit": "Submit",
-    "disableNext": false,
-    "showHeader": false,
-    "showFooter": false,
-    "showActionsInFooter": false
+    "labelSubmit": "Submit"
   }
 }
