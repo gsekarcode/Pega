@@ -2,18 +2,21 @@ import styled, { css, createGlobalStyle } from 'styled-components';
 
 // Hides Pega's default action bar (Submit/Cancel buttons)
 export const HideActionButtons = createGlobalStyle`
-  main article form > div:nth-child(2),
-  pega-embed article form > div:nth-child(2) {
+  main article form > div:nth-child(2) {
     display: none;
   }
 `;
 
 // Hides Pega's default step progress / header
 export const HideStepProgress = createGlobalStyle`
-  main article form > div > div:nth-child(1),
-  pega-embed article form > div > div:nth-child(1) {
+  main article form > div > div:nth-child(1) {
     display: none;
   }
+`;
+
+export const SHADOW_HIDE_CSS = `
+  article form > div:nth-child(2) { display: none; }
+  article form > div > div:nth-child(1) { display: none; }
 `;
 
 // ── Outer container ───────────────────────────────────────────────────────────

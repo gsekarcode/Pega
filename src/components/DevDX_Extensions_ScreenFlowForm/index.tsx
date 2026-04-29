@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { withConfiguration, Button } from '@pega/cosmos-react-core';
 
 import type { PConnProps } from './PConnProps';
@@ -14,7 +15,8 @@ import {
   StyledHeaderSection,
   StyledFooterSection,
   HideActionButtons,
-  HideStepProgress
+  HideStepProgress,
+  SHADOW_HIDE_CSS
 } from './styles';
 
 interface ScreenFlowFormProps extends PConnProps {
@@ -103,6 +105,17 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
     if (index + 1 === currentStep) return 'active';
     return 'upcoming';
   };
+
+  useEffect(() => {
+    const host = document.querySelector('pega-embed');
+    if (!host?.shadowRoot) return;
+    const id = 'screen-flow-hide';
+    if (host.shadowRoot.getElementById(id)) return;
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = SHADOW_HIDE_CSS;
+    host.shadowRoot.appendChild(style);
+  }, []);
 
   return (
     <StyledWrapper>
