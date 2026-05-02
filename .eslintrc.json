@@ -28,6 +28,8 @@
     "**/mock.stories.js",
     "**/demo.stories.tsx",
     "**/mock.stories.ts",
+    "**/demo.test.tsx",
+    "**/demo.test.ts",
     "**/*.mdx"
   ],
   "rules": {
