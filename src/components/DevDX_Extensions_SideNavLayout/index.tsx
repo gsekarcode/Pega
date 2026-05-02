@@ -1,14 +1,14 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { withConfiguration } from '@pega/cosmos-react-core';
 
 import './create-nonce';
-import { CASE_REQUEST_EVENT } from '../DevDX_Extensions_CaseLauncher/index';
 import {
   StyledWrapper,
   StyledLeftPanel,
   StyledNavItem,
   StyledRightPanel,
-  StyledEmptyState
+  StyledEmptyState,
+  StyledNavHeaderSlot
 } from './styles';
 
 interface SideNavLayoutProps {
@@ -18,8 +18,20 @@ interface SideNavLayoutProps {
   navLabel3?: string;
   navLabel4?: string;
   navLabel5?: string;
-  // children[0..4] are the rendered contents for Slot1..Slot5
+  navLabel6?: string;
+  navLabel7?: string;
+  defaultSlot?: string;
   children?: any;
+}
+
+function resolveDefaultIndex(defaultSlot: string | undefined, slots: Array<{ label: string }>) {
+  if (!defaultSlot) return 0;
+  const asNumber = Number(defaultSlot);
+  if (!isNaN(asNumber) && asNumber >= 1) {
+    return Math.min(asNumber - 1, slots.length - 1);
+  }
+  const idx = slots.findIndex(s => s.label?.toLowerCase() === defaultSlot.toLowerCase());
+  return idx >= 0 ? idx : 0;
 }
 
 function DevDXExtensionsSideNavLayout(props: SideNavLayoutProps) {
@@ -30,6 +42,9 @@ function DevDXExtensionsSideNavLayout(props: SideNavLayoutProps) {
     navLabel3,
     navLabel4,
     navLabel5,
+    navLabel6,
+    navLabel7,
+    defaultSlot = '',
     children = []
   } = props;
 
@@ -40,33 +55,15 @@ function DevDXExtensionsSideNavLayout(props: SideNavLayoutProps) {
     { label: navLabel2 ?? inherited.navLabel2, content: children[1] },
     { label: navLabel3 ?? inherited.navLabel3, content: children[2] },
     { label: navLabel4 ?? inherited.navLabel4, content: children[3] },
-    { label: navLabel5 ?? inherited.navLabel5, content: children[4] }
+    { label: navLabel5 ?? inherited.navLabel5, content: children[4] },
+    { label: navLabel6 ?? inherited.navLabel6, content: children[5] },
+    { label: navLabel7 ?? inherited.navLabel7, content: children[6] }
   ].filter(slot => typeof slot.label === 'string' && slot.label.trim() !== '');
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  // children[7] is the optional NavHeaderSlot widget
+  const navHeaderWidget = children[7];
 
-  const handleCaseRequest = useCallback(
-    ({ className, flowType }: { className: string; flowType: string }) => {
-      const pConn = getPConnect();
-      // Open case creation in a modal so it doesn't replace the page
-      pConn.getActionsApi().createWork(className, {
-        flowType,
-        containerName: 'modal',
-        openCaseViewAfterCreate: true
-      });
-    },
-    [getPConnect]
-  );
-
-  // Subscribe on mount; unsubscribe on unmount
-  useEffect(() => {
-    const SUB_KEY = 'G_SIDENAV_RIGHT_PANEL';
-    const PCore = (window as any).PCore;
-    PCore?.getPubSubUtils?.()?.subscribe(CASE_REQUEST_EVENT, handleCaseRequest, SUB_KEY);
-    return () => {
-      PCore?.getPubSubUtils?.()?.unsubscribe(CASE_REQUEST_EVENT, SUB_KEY);
-    };
-  }, [handleCaseRequest]);
+  const [selectedIndex, setSelectedIndex] = useState(() => resolveDefaultIndex(defaultSlot, allSlots));
 
   const handleNavClick = (index: number) => {
     setSelectedIndex(index);
@@ -82,6 +79,10 @@ function DevDXExtensionsSideNavLayout(props: SideNavLayoutProps) {
     <StyledWrapper>
       {/* ── Left navigation panel ── */}
       <StyledLeftPanel role='navigation' aria-label='Page navigation'>
+        {navHeaderWidget && (
+          <StyledNavHeaderSlot>{navHeaderWidget}</StyledNavHeaderSlot>
+        )}
+
         {allSlots.map((slot, i) => (
           <StyledNavItem
             key={slot.label}

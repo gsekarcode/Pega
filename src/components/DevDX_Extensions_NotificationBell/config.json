@@ -1,0 +1,35 @@
+{
+  "name": "DevDX_Extensions_NotificationBell",
+  "label": "Notification Bell",
+  "description": "Displays a notification bell with unread count badge. Click to see the notification list.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_NotificationBell",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "notificationDataPage",
+      "label": "Notification data page",
+      "format": "TEXT",
+      "placeholder": "e.g. D_Notification",
+      "required": true
+    },
+    {
+      "name": "placement",
+      "label": "Popover placement",
+      "format": "SELECT",
+      "defaultValue": "bottom-end",
+      "source": [
+        { "key": "bottom-end",   "value": "Bottom right" },
+        { "key": "bottom-start", "value": "Bottom left" },
+        { "key": "bottom",       "value": "Bottom center" }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "placement": "bottom-end"
+  }
+}

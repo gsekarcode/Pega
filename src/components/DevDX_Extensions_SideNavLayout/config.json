@@ -12,6 +12,18 @@
   "icon": "images/pz-two-column.svg",
   "properties": [
     {
+      "name": "NavHeaderSlot",
+      "label": "Nav header widget (optional)",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Widgets"]
+    },
+    {
+      "name": "defaultSlot",
+      "label": "Default slot",
+      "format": "TEXT",
+      "placeholder": "Slot label or number (e.g. Reports or 2)"
+    },
+    {
       "name": "navLabel1",
       "label": "Item 1 — label",
       "format": "TEXT",
@@ -64,6 +76,28 @@
     {
       "name": "Slot5",
       "label": "Item 5 — content",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
+    },
+    {
+      "name": "navLabel6",
+      "label": "Item 6 — label",
+      "format": "TEXT"
+    },
+    {
+      "name": "Slot6",
+      "label": "Item 6 — content",
+      "format": "CONTENTPICKER",
+      "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
+    },
+    {
+      "name": "navLabel7",
+      "label": "Item 7 — label",
+      "format": "TEXT"
+    },
+    {
+      "name": "Slot7",
+      "label": "Item 7 — content",
       "format": "CONTENTPICKER",
       "addTypeList": ["Views", "Fields", "Widgets", "Insights"]
     }

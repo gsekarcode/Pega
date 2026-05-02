@@ -78,6 +78,31 @@
       ]
     },
     {
+      "name": "showCancelButton",
+      "label": "Show cancel button",
+      "format": "BOOLEAN",
+      "defaultValue": false
+    },
+    {
+      "label": "Cancel button",
+      "format": "GROUP",
+      "visibility": "($this.showCancelButton = true)",
+      "properties": [
+        {
+          "name": "labelCancel",
+          "label": "Cancel button label",
+          "format": "TEXT",
+          "defaultValue": "Cancel"
+        },
+        {
+          "name": "cancelActionName",
+          "label": "Flow action name (leave blank to cancel directly)",
+          "format": "TEXT",
+          "placeholder": "e.g. pyCancel"
+        }
+      ]
+    },
+    {
       "name": "Fields",
       "label": "Form fields",
       "format": "CONTENTPICKER",
@@ -92,6 +117,8 @@
     "showNavigationButtons": true,
     "labelPrevious": "Previous",
     "labelNext": "Next",
-    "labelSubmit": "Submit"
+    "labelSubmit": "Submit",
+    "showCancelButton": false,
+    "labelCancel": "Cancel"
   }
 }

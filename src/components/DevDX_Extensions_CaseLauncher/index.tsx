@@ -8,11 +8,8 @@ import {
   Text,
   Button
 } from '@pega/cosmos-react-core';
-import StyledCard from './styles';
+import StyledCard, { StyledLoadingBar, StyledLoadingWrapper } from './styles';
 import './create-nonce';
-
-// PubSub event name shared with SideNavLayout
-export const CASE_REQUEST_EVENT = 'G_EXTENSIONS_OPEN_CASE_IN_PANEL';
 
 export type CaseLauncherProps = {
   /** Card heading */
@@ -25,6 +22,8 @@ export type CaseLauncherProps = {
   labelPrimaryButton: string;
   /** When true, the case is created automatically when the widget mounts */
   autoLaunch?: boolean | string;
+  /** Container to open the case in: modal, primary, or workarea */
+  containerName?: 'modal' | 'primary' | 'workarea';
   getPConnect: any;
 };
 
@@ -34,6 +33,7 @@ export const DevDXExtensionsCaseLauncher = (props: CaseLauncherProps) => {
     description = '',
     classFilter,
     labelPrimaryButton,
+    containerName = 'modal',
     getPConnect
   } = props;
 
@@ -45,33 +45,12 @@ export const DevDXExtensionsCaseLauncher = (props: CaseLauncherProps) => {
   // Guard against React Strict Mode double-invocation in development
   const hasAutoLaunched = useRef(false);
   const [autoLaunched, setAutoLaunched] = useState(false);
+  const [loading, setLoading] = useState(autoLaunch);
 
-  /**
-   * Publish a PubSub event so SideNavLayout can intercept and render the
-   * case creation form in its right panel. Falls back to opening in the
-   * primary container when running standalone (no SideNavLayout present).
-   */
   const requestCase = (className: string) => {
-    const PCore = (window as any).PCore;
-    const published = PCore?.getPubSubUtils?.()?.publish(
-      CASE_REQUEST_EVENT,
-      { className, flowType: 'pyStartCase' }
-    );
-    // publish() returns undefined when no subscribers — fall back to modal
-    if (!published) {
-      pConn.getActionsApi().createWork(className, {
-        flowType: 'pyStartCase',
-        containerName: 'modal',
-        openCaseViewAfterCreate: true
-      });
-    }
-  };
-
-  // Auto-launch on mount: always open in primary so the page navigates directly
-  const createCaseInPrimary = (className: string) => {
     pConn.getActionsApi().createWork(className, {
       flowType: 'pyStartCase',
-      containerName: 'primary',
+      containerName,
       openCaseViewAfterCreate: true
     });
   };
@@ -79,12 +58,22 @@ export const DevDXExtensionsCaseLauncher = (props: CaseLauncherProps) => {
   useEffect(() => {
     if (autoLaunch && !hasAutoLaunched.current) {
       hasAutoLaunched.current = true;
-      createCaseInPrimary(classFilter);
+      requestCase(classFilter);
       setAutoLaunched(true);
+      setLoading(false);
     }
     // classFilter intentionally excluded — fire only once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (loading) {
+    return (
+      <StyledLoadingWrapper>
+        <Text variant='secondary'>Opening case…</Text>
+        <StyledLoadingBar role='progressbar' aria-label='Loading' />
+      </StyledLoadingWrapper>
+    );
+  }
 
   return (
     <Card as={StyledCard}>

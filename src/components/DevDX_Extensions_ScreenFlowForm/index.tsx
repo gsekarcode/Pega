@@ -30,6 +30,9 @@ interface ScreenFlowFormProps extends PConnProps {
   labelSubmit?: string;
   /** Bind to a property or condition — when true the Next/Submit button is disabled */
   disableNext?: boolean | string;
+  showCancelButton?: boolean | string;
+  labelCancel?: string;
+  cancelActionName?: string;
   children?: any[];
 }
 
@@ -52,8 +55,12 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
     labelPrevious = 'Previous',
     labelNext = 'Next',
     labelSubmit = 'Submit',
+    labelCancel = 'Cancel',
+    cancelActionName = '',
     children = []
   } = props;
+
+  const showCancelButton = coerceBool(props.showCancelButton, false);
 
   const showStepProgress      = coerceBool(props.showStepProgress, true);
   const showNavigationButtons = coerceBool(props.showNavigationButtons, true);
@@ -86,7 +93,15 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
     pConn.getActionsApi().navigateToStep('previous', contextName);
   };
 
-  // Cancel the entire flow
+  // Cancel the entire flow — opens a named flow action if configured, otherwise cancels directly
+  const handleCancel = () => {
+    if (cancelActionName) {
+      pConn.getActionsApi().openLocalAction(cancelActionName, { containerName: 'modal' });
+    } else {
+      pConn.getActionsApi().cancelAssignment(contextName);
+    }
+  };
+
   // Derive the visual state of each step
   const getStepState = (index: number): 'complete' | 'active' | 'upcoming' => {
     if (index + 1 < currentStep) return 'complete';
@@ -148,6 +163,13 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
       {/* ── Navigation buttons ──────────────────────────────────────────── */}
       {showNavigationButtons && (
         <StyledActionBar data-testid='screen-flow-actions'>
+          {/* Cancel — pinned to the left */}
+          {showCancelButton && (
+            <Button variant='secondary' onClick={handleCancel} data-testid='btn-cancel'>
+              {labelCancel}
+            </Button>
+          )}
+
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             {/* Previous — hidden on the first step */}
             {!isFirstStep && (

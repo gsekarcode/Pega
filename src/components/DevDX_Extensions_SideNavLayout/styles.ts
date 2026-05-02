@@ -27,6 +27,19 @@ export const StyledLeftPanel = styled.nav(() =>
   `
 );
 
+// Optional widget slot at the top of the left panel (e.g. NotificationBell)
+export const StyledNavHeaderSlot = styled.div(() =>
+  css`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.375rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+    color: #cbd5e1;
+  `
+);
+
 // Individual nav button — white text on dark blue
 export const StyledNavItem = styled.button(() =>
   css`

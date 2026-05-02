@@ -133,7 +133,7 @@ export const StyledFieldsWrapper = styled.div(() =>
 export const StyledActionBar = styled.div(() =>
   css`
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding-top: 1rem;
     border-top: 1px solid #e5e7eb;

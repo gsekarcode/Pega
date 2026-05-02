@@ -49,6 +49,12 @@
       "defaultValue": false
     },
     {
+      "name": "containerName",
+      "label": "Open in",
+      "format": "TEXT",
+      "defaultValue": "modal"
+    },
+    {
       "label": "Conditions",
       "format": "GROUP",
       "properties": [
@@ -61,6 +67,7 @@
     }
   ],
   "defaultConfig": {
-    "autoLaunch": false
+    "autoLaunch": false,
+    "containerName": "modal"
   }
 }
