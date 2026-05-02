@@ -1,6 +1,4 @@
-/// <reference types="react" />
 import './create-nonce';
-export declare const CASE_REQUEST_EVENT = "G_EXTENSIONS_OPEN_CASE_IN_PANEL";
 export type CaseLauncherProps = {
     /** Card heading */
     heading: string;
@@ -12,6 +10,8 @@ export type CaseLauncherProps = {
     labelPrimaryButton: string;
     /** When true, the case is created automatically when the widget mounts */
     autoLaunch?: boolean | string;
+    /** Container to open the case in: modal, primary, or workarea */
+    containerName?: 'modal' | 'primary' | 'workarea';
     getPConnect: any;
 };
 export declare const DevDXExtensionsCaseLauncher: (props: CaseLauncherProps) => import("react/jsx-runtime").JSX.Element;

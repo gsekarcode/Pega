@@ -1,5 +1,6 @@
 export declare const HideActionButtons: import("styled-components").GlobalStyleComponent<{}, import("styled-components").DefaultTheme>;
 export declare const HideStepProgress: import("styled-components").GlobalStyleComponent<{}, import("styled-components").DefaultTheme>;
+export declare const SHADOW_HIDE_CSS = "\n  article form > div:nth-child(2) { display: none; }\n  article form > div > div:nth-child(1) { display: none; }\n";
 export declare const StyledWrapper: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 export declare const StyledStepper: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 export declare const StyledStep: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;

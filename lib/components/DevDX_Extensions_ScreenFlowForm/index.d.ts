@@ -14,11 +14,9 @@ interface ScreenFlowFormProps extends PConnProps {
     labelSubmit?: string;
     /** Bind to a property or condition — when true the Next/Submit button is disabled */
     disableNext?: boolean | string;
-    /** Show the header region (above step progress) */
-    showHeader?: boolean | string;
-    /** Show the footer region (below navigation buttons) */
-    showFooter?: boolean | string;
-    /** children[0]=Header region, children[1]=Fields region, children[2]=Footer region */
+    showCancelButton?: boolean | string;
+    labelCancel?: string;
+    cancelActionName?: string;
     children?: any[];
 }
 export declare const DevDXExtensionsScreenFlowForm: (props: ScreenFlowFormProps) => import("react/jsx-runtime").JSX.Element;

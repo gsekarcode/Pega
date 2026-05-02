@@ -7,6 +7,9 @@ interface SideNavLayoutProps {
     navLabel3?: string;
     navLabel4?: string;
     navLabel5?: string;
+    navLabel6?: string;
+    navLabel7?: string;
+    defaultSlot?: string;
     children?: any;
 }
 declare function DevDXExtensionsSideNavLayout(props: SideNavLayoutProps): import("react/jsx-runtime").JSX.Element;

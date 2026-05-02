@@ -79,6 +79,7 @@ function DevDXExtensionsCollapsibleLayout(props: CollapsibleLayoutProps) {
       {showBody && (
         <StyledBody data-testid='collapsible-body'>
           {children.map((child: any, index: number) => (
+            // eslint-disable-next-line react/no-array-index-key
             <StyledRegion key={`region-${index}`} data-testid={`region-${index}`}>
               {child}
             </StyledRegion>
