@@ -88,30 +88,35 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       return;
     }
 
-    // Extract case ID — try common Pega property names
-    const caseID = firstItem.ID       ??
-                   firstItem.caseId   ??
-                   firstItem.pzInsKey ??
-                   firstItem.key      ??
-                   firstItem.caseID   ?? '';
+    console.log('[WorkareaHost] raw item:', JSON.stringify(firstItem));
 
-    // Extract context — may be stored directly on the item
-    const dataContext = firstItem.context    ??
-                        firstItem.dataContext ??
-                        firstItem.contextName ?? '';
+    // context is null when Pega adds the item but rendering fails —
+    // read everything we need directly from the item itself
+    const caseID = firstItem.ID            ??
+                   firstItem.caseID        ??
+                   firstItem.caseId        ??
+                   firstItem.pzInsKey      ??
+                   firstItem.key           ?? '';
 
-    console.log('[WorkareaHost] caseID:', caseID, '| dataContext:', dataContext, '| raw item:', JSON.stringify(firstItem));
+    const status = firstItem.status        ??
+                   firstItem.pyStatusWork  ??
+                   firstItem.caseStatus    ?? '';
 
-    // Pull case and assignment data if we have a context, otherwise use item data directly
-    const caseInfo       = (dataContext ? PCore.getStoreValue?.('caseInfo',      '', dataContext) : null) ?? {};
-    const assignmentInfo = (dataContext ? PCore.getStoreValue?.('assignmentInfo', '', dataContext) : null) ?? {};
+    const assignmentName = firstItem.name              ??
+                           firstItem.assignmentName    ??
+                           firstItem.pyLabel           ??
+                           firstItem.currentAssignmentName ?? '';
+
+    const urgency = firstItem.urgency      ??
+                    firstItem.pyUrgency    ??
+                    firstItem.slaUrgency   ?? '';
 
     setWorkareaState({
       activeContext: itemKey ?? workareaTarget,
-      caseID:        caseInfo.ID ?? caseInfo.caseId ?? caseID,
-      status:         caseInfo.status ?? caseInfo.pyStatusWork ?? '',
-      assignmentName: assignmentInfo.name ?? assignmentInfo.pyLabel ?? caseInfo.currentAssignmentName ?? '',
-      urgency:        String(assignmentInfo.urgency ?? caseInfo.urgency ?? '')
+      caseID,
+      status,
+      assignmentName,
+      urgency: String(urgency)
     });
   }, []);
 
