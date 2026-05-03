@@ -1,0 +1,62 @@
+{
+  "name": "DevDX_Extensions_CaseInitiator",
+  "label": "Case Initiator",
+  "description": "Creates a case via the DX API and shows the first assignment inline with a direct open button.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_CaseInitiator",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT",
+      "defaultValue": "Create a case"
+    },
+    {
+      "name": "description",
+      "label": "Description",
+      "format": "TEXT"
+    },
+    {
+      "name": "classFilter",
+      "label": "Case type",
+      "format": "SELECT",
+      "placeholder": "Choose a case type...",
+      "source": {
+        "name": "D_pyQuickCreate",
+        "displayProp": "pyLabel",
+        "valueProp": "pyClassName"
+      },
+      "required": true
+    },
+    {
+      "name": "labelCreate",
+      "label": "Create button label",
+      "format": "TEXT",
+      "defaultValue": "Create & Start"
+    },
+    {
+      "name": "containerName",
+      "label": "Open assignment in",
+      "format": "TEXT",
+      "defaultValue": "primary",
+      "placeholder": "primary, workarea, or modal"
+    },
+    {
+      "name": "autoCreate",
+      "label": "Auto-create on load",
+      "format": "BOOLEAN",
+      "defaultValue": false
+    }
+  ],
+  "defaultConfig": {
+    "heading": "Create a case",
+    "labelCreate": "Create & Start",
+    "containerName": "primary",
+    "autoCreate": false
+  }
+}
