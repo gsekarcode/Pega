@@ -125,17 +125,19 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
 
     const handler = () => refreshWorkarea();
 
-    pubSub.subscribe(caseEvents.CASE_OPENED,              handler, `${id}-case-opened`);
-    pubSub.subscribe(caseEvents.ASSIGNMENT_OPENED,        handler, `${id}-assignment-opened`);
-    pubSub.subscribe(caseEvents.ASSIGNMENT_SUBMISSION,    handler, `${id}-assignment-submitted`);
-    pubSub.subscribe(caseEvents.CASE_CLOSED,              handler, `${id}-case-closed`);
-    pubSub.subscribe(caseEvents.CREATE_STAGE_DONE,        handler, `${id}-create-done`);
+    pubSub.subscribe(caseEvents.CASE_CREATED,               handler, `${id}-case-created`);
+    pubSub.subscribe(caseEvents.CASE_OPENED,               handler, `${id}-case-opened`);
+    pubSub.subscribe(caseEvents.ASSIGNMENT_OPENED,         handler, `${id}-assignment-opened`);
+    pubSub.subscribe(caseEvents.ASSIGNMENT_SUBMISSION,     handler, `${id}-assignment-submitted`);
+    pubSub.subscribe(caseEvents.CASE_CLOSED,               handler, `${id}-case-closed`);
+    pubSub.subscribe(caseEvents.CREATE_STAGE_DONE,         handler, `${id}-create-done`);
     pubSub.subscribe(caseEvents.CURRENT_ASSIGNMENT_UPDATED, handler, `${id}-assignment-updated`);
 
     // Check workarea immediately on mount
     refreshWorkarea();
 
     return () => {
+      pubSub.unsubscribe(caseEvents.CASE_CREATED,               `${id}-case-created`);
       pubSub.unsubscribe(caseEvents.CASE_OPENED,               `${id}-case-opened`);
       pubSub.unsubscribe(caseEvents.ASSIGNMENT_OPENED,         `${id}-assignment-opened`);
       pubSub.unsubscribe(caseEvents.ASSIGNMENT_SUBMISSION,     `${id}-assignment-submitted`);
