@@ -71,8 +71,6 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       items = storeState?.containers?.[workareaTarget]?.items ?? null;
     }
 
-    console.log('[WorkareaHost] target:', workareaTarget, '| items:', JSON.stringify(items));
-
     if (!items || Object.keys(items).length === 0) {
       setWorkareaState(null);
       return;
@@ -81,35 +79,32 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
     // getActiveContainerItemName returns null when item was added but not activated
     // (happens when rendering fails). Read directly from the item value instead.
     const [itemKey, firstItem] = Object.entries(items)[0] as [string, any];
-    console.log('[WorkareaHost] itemKey:', itemKey, '| firstItem:', JSON.stringify(firstItem));
 
     if (!firstItem) {
       setWorkareaState(null);
       return;
     }
 
-    console.log('[WorkareaHost] raw item:', JSON.stringify(firstItem));
-
     // context is null when Pega adds the item but rendering fails —
-    // read everything we need directly from the item itself
-    const caseID = firstItem.ID            ??
-                   firstItem.caseID        ??
-                   firstItem.caseId        ??
-                   firstItem.pzInsKey      ??
-                   firstItem.key           ?? '';
+    // read everything we need directly from the item, covering all known Pega property variants
+    const pick = (...keys: string[]) => {
+      for (const k of keys) {
+        const v = firstItem[k];
+        if (v !== null && v !== undefined && v !== '') return v;
+      }
+      return '';
+    };
 
-    const status = firstItem.status        ??
-                   firstItem.pyStatusWork  ??
-                   firstItem.caseStatus    ?? '';
+    const caseID = pick('ID', 'caseID', 'caseId', 'pzInsKey', 'key', 'caseInstanceKey');
 
-    const assignmentName = firstItem.name              ??
-                           firstItem.assignmentName    ??
-                           firstItem.pyLabel           ??
-                           firstItem.currentAssignmentName ?? '';
+    const status = pick('status', 'pyStatusWork', 'caseStatus', 'pyStatus', 'statusWork');
 
-    const urgency = firstItem.urgency      ??
-                    firstItem.pyUrgency    ??
-                    firstItem.slaUrgency   ?? '';
+    const assignmentName = pick(
+      'name', 'assignmentName', 'pyLabel', 'currentAssignmentName',
+      'stepName', 'processName', 'flowName', 'pxFlowName'
+    );
+
+    const urgency = pick('urgency', 'pyUrgency', 'slaUrgency', 'pxUrgencyWork');
 
     setWorkareaState({
       activeContext: itemKey ?? workareaTarget,
