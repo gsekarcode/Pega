@@ -74,19 +74,28 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       return;
     }
 
-    const activeContext = PCore.getContainerUtils().getActiveContainerItemContext(workareaTarget);
-    if (!activeContext) {
+    const activeContainerItem = PCore.getContainerUtils().getActiveContainerItemName(workareaTarget);
+    if (!activeContainerItem) {
       setWorkareaState(null);
       return;
     }
 
-    // Pull case and assignment data via store value lookup
-    const caseInfo       = PCore.getStoreValue?.('caseInfo',      '', activeContext) ?? {};
-    const assignmentInfo = PCore.getStoreValue?.('assignmentInfo', '', activeContext) ?? {};
+    // Workarea item holds no data itself — resolve the real data context
+    const dataContext = PCore.getContainerUtils().getDataContextName(activeContainerItem)
+      ?? PCore.getContainerUtils().getActiveContainerItemContext(workareaTarget);
+
+    if (!dataContext) {
+      setWorkareaState(null);
+      return;
+    }
+
+    // Pull case and assignment data from the resolved data context
+    const caseInfo       = PCore.getStoreValue?.('caseInfo',      '', dataContext) ?? {};
+    const assignmentInfo = PCore.getStoreValue?.('assignmentInfo', '', dataContext) ?? {};
 
     setWorkareaState({
-      activeContext,
-      caseID:         caseInfo.ID ?? caseInfo.caseId ?? '',
+      activeContext: activeContainerItem,
+      caseID:        caseInfo.ID ?? caseInfo.caseId ?? '',
       status:         caseInfo.status ?? caseInfo.pyStatusWork ?? '',
       assignmentName: assignmentInfo.name ?? assignmentInfo.pyLabel ?? caseInfo.currentAssignmentName ?? '',
       urgency:        String(assignmentInfo.urgency ?? caseInfo.urgency ?? '')
