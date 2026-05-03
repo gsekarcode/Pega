@@ -1,0 +1,30 @@
+{
+  "name": "DevDX_Extensions_WorkareaHost",
+  "label": "Workarea Host",
+  "description": "Defines a panel as the workarea container. Place this in the right panel of a layout. Anything opened with containerName 'workarea' will appear here.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_WorkareaHost",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "emptyStateMessage",
+      "label": "Empty state message",
+      "format": "TEXT",
+      "defaultValue": "No active work item. Create or open a case to get started."
+    },
+    {
+      "name": "showCaseDetails",
+      "label": "Show case details when active",
+      "format": "BOOLEAN",
+      "defaultValue": true
+    }
+  ],
+  "defaultConfig": {
+    "emptyStateMessage": "No active work item. Create or open a case to get started.",
+    "showCaseDetails": true
+  }
+}
