@@ -62,8 +62,16 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
     const rootContainer  = PCore.getContainerUtils().getRootContainerName?.() ?? 'app';
     const workareaTarget = `${rootContainer}/workarea`;
 
-    const items = PCore.getContainerUtils().getContainerItems(workareaTarget);
-    console.log('[WorkareaHost] target:', workareaTarget, '| items:', items);
+    // Try API first, fall back to reading store directly
+    let items = PCore.getContainerUtils().getContainerItems(workareaTarget);
+
+    if (!items || Object.keys(items).length === 0) {
+      // Direct store fallback — event may fire before API reflects new state
+      const storeState = PCore.getStore?.()?.getState?.();
+      items = storeState?.containers?.[workareaTarget]?.items ?? null;
+    }
+
+    console.log('[WorkareaHost] target:', workareaTarget, '| items:', JSON.stringify(items));
 
     if (!items || Object.keys(items).length === 0) {
       setWorkareaState(null);
