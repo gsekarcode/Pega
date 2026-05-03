@@ -63,6 +63,8 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
     const workareaTarget = `${rootContainer}/workarea`;
 
     const items = PCore.getContainerUtils().getContainerItems(workareaTarget);
+    console.log('[WorkareaHost] target:', workareaTarget, '| items:', items);
+
     if (!items || Object.keys(items).length === 0) {
       setWorkareaState(null);
       return;
@@ -70,6 +72,7 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
 
     // Item key may be null — take the first item by value
     const firstItem = Object.values(items)[0] as any;
+    console.log('[WorkareaHost] firstItem:', firstItem);
     if (!firstItem) {
       setWorkareaState(null);
       return;
@@ -84,9 +87,13 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       ?? PCore.getContainerUtils().getActiveContainerItemContext(workareaTarget)
       ?? '';
 
+    console.log('[WorkareaHost] activeContainerItem:', activeContainerItem, '| dataContext:', dataContext, '| caseID:', caseID);
+
     // Pull case and assignment data from the resolved data context
     const caseInfo       = (dataContext ? PCore.getStoreValue?.('caseInfo',      '', dataContext) : null) ?? {};
     const assignmentInfo = (dataContext ? PCore.getStoreValue?.('assignmentInfo', '', dataContext) : null) ?? {};
+
+    console.log('[WorkareaHost] caseInfo:', caseInfo, '| assignmentInfo:', assignmentInfo);
 
     setWorkareaState({
       activeContext: activeContainerItem ?? workareaTarget,
