@@ -78,33 +78,36 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       return;
     }
 
-    // Item key may be null — take the first item by value
-    const firstItem = Object.values(items)[0] as any;
-    console.log('[WorkareaHost] firstItem:', firstItem);
+    // getActiveContainerItemName returns null when item was added but not activated
+    // (happens when rendering fails). Read directly from the item value instead.
+    const [itemKey, firstItem] = Object.entries(items)[0] as [string, any];
+    console.log('[WorkareaHost] itemKey:', itemKey, '| firstItem:', JSON.stringify(firstItem));
+
     if (!firstItem) {
       setWorkareaState(null);
       return;
     }
 
-    // Case ID lives directly on the item
-    const caseID = firstItem.ID ?? firstItem.caseId ?? firstItem.key ?? '';
+    // Extract case ID — try common Pega property names
+    const caseID = firstItem.ID       ??
+                   firstItem.caseId   ??
+                   firstItem.pzInsKey ??
+                   firstItem.key      ??
+                   firstItem.caseID   ?? '';
 
-    // Resolve data context — try getDataContextName, fall back to active context
-    const activeContainerItem = PCore.getContainerUtils().getActiveContainerItemName(workareaTarget);
-    const dataContext = (activeContainerItem && PCore.getContainerUtils().getDataContextName(activeContainerItem))
-      ?? PCore.getContainerUtils().getActiveContainerItemContext(workareaTarget)
-      ?? '';
+    // Extract context — may be stored directly on the item
+    const dataContext = firstItem.context    ??
+                        firstItem.dataContext ??
+                        firstItem.contextName ?? '';
 
-    console.log('[WorkareaHost] activeContainerItem:', activeContainerItem, '| dataContext:', dataContext, '| caseID:', caseID);
+    console.log('[WorkareaHost] caseID:', caseID, '| dataContext:', dataContext, '| raw item:', JSON.stringify(firstItem));
 
-    // Pull case and assignment data from the resolved data context
+    // Pull case and assignment data if we have a context, otherwise use item data directly
     const caseInfo       = (dataContext ? PCore.getStoreValue?.('caseInfo',      '', dataContext) : null) ?? {};
     const assignmentInfo = (dataContext ? PCore.getStoreValue?.('assignmentInfo', '', dataContext) : null) ?? {};
 
-    console.log('[WorkareaHost] caseInfo:', caseInfo, '| assignmentInfo:', assignmentInfo);
-
     setWorkareaState({
-      activeContext: activeContainerItem ?? workareaTarget,
+      activeContext: itemKey ?? workareaTarget,
       caseID:        caseInfo.ID ?? caseInfo.caseId ?? caseID,
       status:         caseInfo.status ?? caseInfo.pyStatusWork ?? '',
       assignmentName: assignmentInfo.name ?? assignmentInfo.pyLabel ?? caseInfo.currentAssignmentName ?? '',
