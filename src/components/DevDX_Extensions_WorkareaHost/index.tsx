@@ -30,6 +30,7 @@ interface WorkareaState {
 }
 
 interface WorkareaHostProps {
+  getPConnect: any;
   emptyStateMessage?: string;
   showCaseDetails?: boolean | string;
   containerName?: string;
@@ -50,6 +51,7 @@ const InboxIcon = () => (
 
 function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
   const {
+    getPConnect,
     emptyStateMessage = 'No active work item. Create or open a case to get started.',
     containerName = 'rightpanel'
   } = props;
@@ -104,18 +106,15 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
     const rootContainer = PCore.getContainerUtils?.().getRootContainerName?.() ?? 'app';
     const target = `${rootContainer}/${containerName}`;
 
-    // Initialize the custom container if it doesn't already exist
-    if (PCore.getContainerUtils?.().addRootContainerItem) {
-      try {
-        PCore.getContainerUtils().addRootContainerItem(
-          {},            // viewConfig — empty for a custom host container
-          containerName, // container name e.g. 'rightpanel'
-          {},            // appData
-          false          // isPortal
-        );
-      } catch {
-        // Container may already be initialized — safe to ignore
-      }
+    // Initialize the container using the pConnect container manager
+    try {
+      const containerManager = getPConnect().getContainerManager();
+      containerManager.initializeContainers({
+        name: containerName,  // e.g. 'rightpanel' → creates 'app/rightpanel'
+        type: 'single'
+      });
+    } catch {
+      // Safe to ignore — container may already be initialized
     }
 
     const handler = () => refreshContainer(target);
@@ -148,7 +147,7 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       pubSub.unsubscribe(caseEvents.CREATE_STAGE_DONE,          `${id}-create-done`);
       pubSub.unsubscribe(caseEvents.CURRENT_ASSIGNMENT_UPDATED, `${id}-assignment-updated`);
     };
-  }, [containerName, refreshContainer]);
+  }, [containerName, getPConnect, refreshContainer]);
 
   const handleClose = () => {
     const PCore = (window as any).PCore;
