@@ -32,6 +32,7 @@ interface WorkareaState {
 interface WorkareaHostProps {
   emptyStateMessage?: string;
   showCaseDetails?: boolean | string;
+  containerName?: string;
 }
 
 const coerceBool = (val: boolean | string | undefined, fallback: boolean) => {
@@ -48,27 +49,24 @@ const InboxIcon = () => (
 );
 
 function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
-  const { emptyStateMessage = 'No active work item. Create or open a case to get started.' } = props;
+  const {
+    emptyStateMessage = 'No active work item. Create or open a case to get started.',
+    containerName = 'rightpanel'
+  } = props;
 
   const showCaseDetails = coerceBool(props.showCaseDetails, true);
 
   const [workareaState, setWorkareaState] = useState<WorkareaState | null>(null);
 
-  const refreshWorkarea = useCallback(() => {
+  const refreshContainer = useCallback((target: string) => {
     const PCore = (window as any).PCore;
     if (!PCore?.getContainerUtils) return;
 
-    // Derive the correct workarea target using Pega's root container name
-    const rootContainer  = PCore.getContainerUtils().getRootContainerName?.() ?? 'app';
-    const workareaTarget = `${rootContainer}/workarea`;
-
-    // Try API first, fall back to reading store directly
-    let items = PCore.getContainerUtils().getContainerItems(workareaTarget);
+    let items = PCore.getContainerUtils().getContainerItems(target);
 
     if (!items || Object.keys(items).length === 0) {
-      // Direct store fallback — event may fire before API reflects new state
       const storeState = PCore.getStore?.()?.getState?.();
-      items = storeState?.containers?.[workareaTarget]?.items ?? null;
+      items = storeState?.containers?.[target]?.items ?? null;
     }
 
     if (!items || Object.keys(items).length === 0) {
@@ -76,17 +74,12 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       return;
     }
 
-    // getActiveContainerItemName returns null when item was added but not activated
-    // (happens when rendering fails). Read directly from the item value instead.
     const [itemKey, firstItem] = Object.entries(items)[0] as [string, any];
-
     if (!firstItem) {
       setWorkareaState(null);
       return;
     }
 
-    // context is null when Pega adds the item but rendering fails —
-    // read everything we need directly from the item, covering all known Pega property variants
     const pick = (...keys: string[]) => {
       for (const k of keys) {
         const v = firstItem[k];
@@ -95,62 +88,73 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       return '';
     };
 
-    const caseID = pick('ID', 'caseID', 'caseId', 'pzInsKey', 'key', 'caseInstanceKey');
-
-    const status = pick('status', 'pyStatusWork', 'caseStatus', 'pyStatus', 'statusWork');
-
-    const assignmentName = pick(
-      'name', 'assignmentName', 'pyLabel', 'currentAssignmentName',
-      'stepName', 'processName', 'flowName', 'pxFlowName'
-    );
-
-    const urgency = pick('urgency', 'pyUrgency', 'slaUrgency', 'pxUrgencyWork');
-
     setWorkareaState({
-      activeContext: itemKey ?? workareaTarget,
-      caseID,
-      status,
-      assignmentName,
-      urgency: String(urgency)
+      activeContext:  itemKey ?? target,
+      caseID:         pick('ID', 'caseID', 'caseId', 'pzInsKey', 'key', 'caseInstanceKey'),
+      status:         pick('status', 'pyStatusWork', 'caseStatus', 'pyStatus', 'statusWork'),
+      assignmentName: pick('name', 'assignmentName', 'pyLabel', 'currentAssignmentName', 'stepName', 'processName', 'flowName', 'pxFlowName'),
+      urgency:        String(pick('urgency', 'pyUrgency', 'slaUrgency', 'pxUrgencyWork'))
     });
   }, []);
 
   useEffect(() => {
     const PCore = (window as any).PCore;
-    if (!PCore?.getPubSubUtils || !PCore?.getEvents) return;
+    if (!PCore) return;
+
+    const rootContainer = PCore.getContainerUtils?.().getRootContainerName?.() ?? 'app';
+    const target = `${rootContainer}/${containerName}`;
+
+    // Initialize the custom container if it doesn't already exist
+    if (PCore.getContainerUtils?.().addRootContainerItem) {
+      try {
+        PCore.getContainerUtils().addRootContainerItem(
+          {},            // viewConfig — empty for a custom host container
+          containerName, // container name e.g. 'rightpanel'
+          {},            // appData
+          false          // isPortal
+        );
+      } catch {
+        // Container may already be initialized — safe to ignore
+      }
+    }
+
+    const handler = () => refreshContainer(target);
+
+    if (!PCore?.getPubSubUtils || !PCore?.getEvents) {
+      refreshContainer(target);
+      return;
+    }
 
     const caseEvents = PCore.getEvents().getCaseEvent();
     const pubSub = PCore.getPubSubUtils();
-    const id = 'workarea-host-DevDX';
+    const id = `container-host-DevDX-${containerName}`;
 
-    const handler = () => refreshWorkarea();
+    pubSub.subscribe(caseEvents.CASE_CREATED,                handler, `${id}-case-created`);
+    pubSub.subscribe(caseEvents.CASE_OPENED,                 handler, `${id}-case-opened`);
+    pubSub.subscribe(caseEvents.ASSIGNMENT_OPENED,           handler, `${id}-assignment-opened`);
+    pubSub.subscribe(caseEvents.ASSIGNMENT_SUBMISSION,       handler, `${id}-assignment-submitted`);
+    pubSub.subscribe(caseEvents.CASE_CLOSED,                 handler, `${id}-case-closed`);
+    pubSub.subscribe(caseEvents.CREATE_STAGE_DONE,           handler, `${id}-create-done`);
+    pubSub.subscribe(caseEvents.CURRENT_ASSIGNMENT_UPDATED,  handler, `${id}-assignment-updated`);
 
-    pubSub.subscribe(caseEvents.CASE_CREATED,               handler, `${id}-case-created`);
-    pubSub.subscribe(caseEvents.CASE_OPENED,               handler, `${id}-case-opened`);
-    pubSub.subscribe(caseEvents.ASSIGNMENT_OPENED,         handler, `${id}-assignment-opened`);
-    pubSub.subscribe(caseEvents.ASSIGNMENT_SUBMISSION,     handler, `${id}-assignment-submitted`);
-    pubSub.subscribe(caseEvents.CASE_CLOSED,               handler, `${id}-case-closed`);
-    pubSub.subscribe(caseEvents.CREATE_STAGE_DONE,         handler, `${id}-create-done`);
-    pubSub.subscribe(caseEvents.CURRENT_ASSIGNMENT_UPDATED, handler, `${id}-assignment-updated`);
-
-    // Check workarea immediately on mount
-    refreshWorkarea();
+    refreshContainer(target);
 
     return () => {
       pubSub.unsubscribe(caseEvents.CASE_CREATED,               `${id}-case-created`);
-      pubSub.unsubscribe(caseEvents.CASE_OPENED,               `${id}-case-opened`);
-      pubSub.unsubscribe(caseEvents.ASSIGNMENT_OPENED,         `${id}-assignment-opened`);
-      pubSub.unsubscribe(caseEvents.ASSIGNMENT_SUBMISSION,     `${id}-assignment-submitted`);
-      pubSub.unsubscribe(caseEvents.CASE_CLOSED,               `${id}-case-closed`);
-      pubSub.unsubscribe(caseEvents.CREATE_STAGE_DONE,         `${id}-create-done`);
+      pubSub.unsubscribe(caseEvents.CASE_OPENED,                `${id}-case-opened`);
+      pubSub.unsubscribe(caseEvents.ASSIGNMENT_OPENED,          `${id}-assignment-opened`);
+      pubSub.unsubscribe(caseEvents.ASSIGNMENT_SUBMISSION,      `${id}-assignment-submitted`);
+      pubSub.unsubscribe(caseEvents.CASE_CLOSED,                `${id}-case-closed`);
+      pubSub.unsubscribe(caseEvents.CREATE_STAGE_DONE,          `${id}-create-done`);
       pubSub.unsubscribe(caseEvents.CURRENT_ASSIGNMENT_UPDATED, `${id}-assignment-updated`);
     };
-  }, [refreshWorkarea]);
+  }, [containerName, refreshContainer]);
 
   const handleClose = () => {
     const PCore = (window as any).PCore;
     if (!PCore?.getContainerUtils || !workareaState) return;
     PCore.getContainerUtils().closeContainerItem(workareaState.activeContext, { skipDirtyCheck: false });
+    setWorkareaState(null);
   };
 
   if (!workareaState) {
@@ -178,7 +182,6 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
           <StyledMetaGrid>
             <StyledMetaLabel>Case ID</StyledMetaLabel>
             <StyledMetaValue>{workareaState.caseID}</StyledMetaValue>
-
             {workareaState.urgency && (
               <>
                 <StyledMetaLabel>Urgency</StyledMetaLabel>
@@ -199,9 +202,7 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
         )}
 
         <StyledActionRow>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
+          <Button variant='secondary' onClick={handleClose}>Close</Button>
         </StyledActionRow>
       </StyledActivePanel>
     </StyledHost>
