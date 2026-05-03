@@ -103,8 +103,7 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
     const PCore = (window as any).PCore;
     if (!PCore) return;
 
-    const rootContainer = PCore.getContainerUtils?.().getRootContainerName?.() ?? 'app';
-    const target = `${rootContainer}/${containerName}`;
+    const target = `app/${containerName}`;
 
     // Initialize the container using the pConnect container manager
     try {
