@@ -30,7 +30,6 @@ interface WorkareaState {
 }
 
 interface WorkareaHostProps {
-  getPConnect: any;
   emptyStateMessage?: string;
   showCaseDetails?: boolean | string;
 }
@@ -49,10 +48,7 @@ const InboxIcon = () => (
 );
 
 function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
-  const {
-    getPConnect,
-    emptyStateMessage = 'No active work item. Create or open a case to get started.'
-  } = props;
+  const { emptyStateMessage = 'No active work item. Create or open a case to get started.' } = props;
 
   const showCaseDetails = coerceBool(props.showCaseDetails, true);
 
@@ -62,45 +58,44 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
     const PCore = (window as any).PCore;
     if (!PCore?.getContainerUtils) return;
 
-    const contextName = getPConnect().getContextName();
+    // Derive the correct workarea target using Pega's root container name
+    const rootContainer  = PCore.getContainerUtils().getRootContainerName?.() ?? 'app';
+    const workareaTarget = `${rootContainer}/workarea`;
 
-    // The workarea target lives under the primary container item context
-    // e.g. if contextName = 'app/primary_1', workarea target = 'app/primary_1/workarea'
-    const workareaTarget = `${contextName}/workarea`;
-
-    const hasItems = PCore.getContainerUtils().areContainerItemsPresent(workareaTarget);
-    if (!hasItems) {
+    const items = PCore.getContainerUtils().getContainerItems(workareaTarget);
+    if (!items || Object.keys(items).length === 0) {
       setWorkareaState(null);
       return;
     }
 
+    // Item key may be null — take the first item by value
+    const firstItem = Object.values(items)[0] as any;
+    if (!firstItem) {
+      setWorkareaState(null);
+      return;
+    }
+
+    // Case ID lives directly on the item
+    const caseID = firstItem.ID ?? firstItem.caseId ?? firstItem.key ?? '';
+
+    // Resolve data context — try getDataContextName, fall back to active context
     const activeContainerItem = PCore.getContainerUtils().getActiveContainerItemName(workareaTarget);
-    if (!activeContainerItem) {
-      setWorkareaState(null);
-      return;
-    }
-
-    // Workarea item holds no data itself — resolve the real data context
-    const dataContext = PCore.getContainerUtils().getDataContextName(activeContainerItem)
-      ?? PCore.getContainerUtils().getActiveContainerItemContext(workareaTarget);
-
-    if (!dataContext) {
-      setWorkareaState(null);
-      return;
-    }
+    const dataContext = (activeContainerItem && PCore.getContainerUtils().getDataContextName(activeContainerItem))
+      ?? PCore.getContainerUtils().getActiveContainerItemContext(workareaTarget)
+      ?? '';
 
     // Pull case and assignment data from the resolved data context
-    const caseInfo       = PCore.getStoreValue?.('caseInfo',      '', dataContext) ?? {};
-    const assignmentInfo = PCore.getStoreValue?.('assignmentInfo', '', dataContext) ?? {};
+    const caseInfo       = (dataContext ? PCore.getStoreValue?.('caseInfo',      '', dataContext) : null) ?? {};
+    const assignmentInfo = (dataContext ? PCore.getStoreValue?.('assignmentInfo', '', dataContext) : null) ?? {};
 
     setWorkareaState({
-      activeContext: activeContainerItem,
-      caseID:        caseInfo.ID ?? caseInfo.caseId ?? '',
+      activeContext: activeContainerItem ?? workareaTarget,
+      caseID:        caseInfo.ID ?? caseInfo.caseId ?? caseID,
       status:         caseInfo.status ?? caseInfo.pyStatusWork ?? '',
       assignmentName: assignmentInfo.name ?? assignmentInfo.pyLabel ?? caseInfo.currentAssignmentName ?? '',
       urgency:        String(assignmentInfo.urgency ?? caseInfo.urgency ?? '')
     });
-  }, [getPConnect]);
+  }, []);
 
   useEffect(() => {
     const PCore = (window as any).PCore;

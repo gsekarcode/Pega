@@ -1,6 +1,5 @@
 import './create-nonce';
 interface WorkareaHostProps {
-    getPConnect: any;
     emptyStateMessage?: string;
     showCaseDetails?: boolean | string;
 }
