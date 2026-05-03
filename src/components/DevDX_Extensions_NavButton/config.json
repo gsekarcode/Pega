@@ -1,0 +1,77 @@
+{
+  "name": "DevDX_Extensions_NavButton",
+  "label": "Navigation Button",
+  "description": "A button that navigates to a specific Pega page in the primary container.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_NavButton",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Field label",
+      "format": "TEXT"
+    },
+    {
+      "name": "buttonLabel",
+      "label": "Button label",
+      "format": "TEXT",
+      "required": true,
+      "defaultValue": "Open"
+    },
+    {
+      "name": "className",
+      "label": "Class name",
+      "format": "TEXT",
+      "placeholder": "e.g. APP-WORK-SERVICEREQUEST",
+      "required": true
+    },
+    {
+      "name": "pageName",
+      "label": "Page name",
+      "format": "TEXT",
+      "placeholder": "e.g. pyStartCase or EditDetails",
+      "required": true
+    },
+    {
+      "name": "variant",
+      "label": "Button style",
+      "format": "SELECT",
+      "defaultValue": "primary",
+      "source": [
+        { "key": "primary",   "value": "Primary"   },
+        { "key": "secondary", "value": "Secondary" },
+        { "key": "link",      "value": "Link"       }
+      ]
+    },
+    {
+      "name": "readOnly",
+      "label": "Edit mode",
+      "format": "READONLY"
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "disabled",
+          "label": "Disabled",
+          "format": "DISABLED",
+          "visibility": "(!readOnly = true)"
+        },
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "buttonLabel": "Open",
+    "variant": "primary"
+  }
+}
