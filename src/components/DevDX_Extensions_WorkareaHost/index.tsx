@@ -80,14 +80,9 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       return;
     }
 
-    // Pull case and assignment data from the store
-    const store = PCore.getStore();
-    const state = store?.getState?.() ?? {};
-
-    // Navigate to the active context's data — Pega stores it under state.data[context]
-    const contextData = activeContext.split('/').reduce((acc: any, key: string) => acc?.[key], state?.data ?? {});
-    const caseInfo = contextData?.caseInfo ?? {};
-    const assignmentInfo = contextData?.assignmentInfo ?? {};
+    // Pull case and assignment data via store value lookup
+    const caseInfo       = PCore.getStoreValue?.('caseInfo',      '', activeContext) ?? {};
+    const assignmentInfo = PCore.getStoreValue?.('assignmentInfo', '', activeContext) ?? {};
 
     setWorkareaState({
       activeContext,
@@ -118,13 +113,6 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
     // Check workarea immediately on mount
     refreshWorkarea();
 
-    // Also watch the Redux store for changes (catches container updates with no event)
-    const store = PCore.getStore?.();
-    let storeUnsub: (() => void) | undefined;
-    if (store?.subscribe) {
-      storeUnsub = store.subscribe(handler);
-    }
-
     return () => {
       pubSub.unsubscribe(caseEvents.CASE_OPENED,               `${id}-case-opened`);
       pubSub.unsubscribe(caseEvents.ASSIGNMENT_OPENED,         `${id}-assignment-opened`);
@@ -132,7 +120,6 @@ function DevDXExtensionsWorkareaHost(props: WorkareaHostProps) {
       pubSub.unsubscribe(caseEvents.CASE_CLOSED,               `${id}-case-closed`);
       pubSub.unsubscribe(caseEvents.CREATE_STAGE_DONE,         `${id}-create-done`);
       pubSub.unsubscribe(caseEvents.CURRENT_ASSIGNMENT_UPDATED, `${id}-assignment-updated`);
-      storeUnsub?.();
     };
   }, [refreshWorkarea]);
 
