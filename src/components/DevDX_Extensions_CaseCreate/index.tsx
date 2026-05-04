@@ -81,17 +81,24 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
     setError('');
 
     const PCore = (window as any).PCore;
+    const baseUrl = PCore.getEnvironmentInfo().getDefaultBaseURL();
 
     try {
-      const response = await PCore.getRestClient().invokeRestApi('cases', {
-        reqPayload: {
+      const response = await fetch(`${baseUrl}/api/application/v2/cases`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           caseTypeID: classFilter,
           processID: 'pyStartCase',
           content: {}
-        }
+        })
       });
 
-      const data = response?.data ?? response;
+      if (!response.ok) {
+        throw new Error(`Failed to create case: ${response.statusText}`);
+      }
+
+      const data = await response.json();
       const caseID: string = data?.ID ?? data?.caseInfo?.ID ?? '';
       const rawAssignments: any[] = data?.data?.caseInfo?.assignments ?? data?.caseInfo?.assignments ?? [];
       const raw = rawAssignments[0];
