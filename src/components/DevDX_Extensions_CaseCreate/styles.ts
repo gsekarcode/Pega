@@ -108,71 +108,12 @@ export const StyledCaseCardTitle = styled.span(() =>
   `
 );
 
-export const StyledCaseDetails = styled.div(() =>
+export const StyledCaseID = styled.p(() =>
   css`
-    padding: 0.75rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  `
-);
-
-export const StyledDetailRow = styled.div(() =>
-  css`
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
+    margin: 0;
+    padding: 0.5rem 1rem 0.75rem;
     font-size: 0.875rem;
-  `
-);
-
-export const StyledDetailLabel = styled.span(() =>
-  css`
     color: #6b7280;
-    font-size: 0.8125rem;
-    min-width: 110px;
-    flex-shrink: 0;
-  `
-);
-
-export const StyledDetailValue = styled.span(() =>
-  css`
-    color: #111827;
-    font-weight: 500;
-    word-break: break-all;
-  `
-);
-
-// ── Assignment section ────────────────────────────────────────────────────────
-
-export const StyledAssignmentSection = styled.div(() =>
-  css`
-    padding: 0.75rem 1rem;
-    border-top: 1px solid #e2e8f0;
-    background: #f8fafc;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  `
-);
-
-export const StyledAssignmentLabel = styled.p(() =>
-  css`
-    margin: 0;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #9ca3af;
-    font-weight: 600;
-  `
-);
-
-export const StyledAssignmentName = styled.p(() =>
-  css`
-    margin: 0;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: #1e293b;
   `
 );
 

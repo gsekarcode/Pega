@@ -13,13 +13,7 @@ import {
   StyledCaseCardHeader,
   StyledSuccessIcon,
   StyledCaseCardTitle,
-  StyledCaseDetails,
-  StyledDetailRow,
-  StyledDetailLabel,
-  StyledDetailValue,
-  StyledAssignmentSection,
-  StyledAssignmentLabel,
-  StyledAssignmentName,
+  StyledCaseID,
   StyledActionBar,
   StyledError
 } from './styles';
@@ -33,8 +27,6 @@ interface CaseCreateProps {
   labelCreate?: string;
   /** View to open after creation (default: pyDetails) */
   viewName?: string;
-  /** Container slot to open the case in (default: primary) */
-  containerName?: string;
   autoCreate?: boolean | string;
 }
 
@@ -43,7 +35,6 @@ type Stage = 'idle' | 'creating' | 'launched' | 'error';
 interface LaunchedCase {
   caseID: string;
   assignmentID: string;
-  assignmentName: string;
 }
 
 const coerceBool = (val: boolean | string | undefined, fallback: boolean): boolean => {
@@ -59,8 +50,7 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
     description = '',
     classFilter,
     labelCreate = 'Create case',
-    viewName = 'pyDetails',
-    containerName = 'primary'
+    viewName = 'pyDetails'
   } = props;
 
   const autoCreate = coerceBool(props.autoCreate, false);
@@ -77,12 +67,12 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
 
     // Prefer opening the specific assignment — covers both "open case" and "open assignment"
     if (assignmentID && PCore?.getMashupApi?.()?.openAssignment) {
-      PCore.getMashupApi().openAssignment(assignmentID, containerName, { viewName });
+      PCore.getMashupApi().openAssignment(assignmentID, 'primary', { viewName });
       return;
     }
 
-    // Fallback: open the case in the container using standard navigation
-    pConn.getActionsApi().openWork(caseID, { containerName });
+    // Fallback: open the case in the portal's primary work area
+    pConn.getActionsApi().openWork(caseID, { containerName: 'primary' });
   };
 
   const createCase = async () => {
@@ -111,9 +101,8 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
       const rawAssignments: any[] = data?.data?.caseInfo?.assignments ?? data?.caseInfo?.assignments ?? [];
       const raw = rawAssignments[0];
       const assignmentID: string = raw?.ID ?? raw?.id ?? '';
-      const assignmentName: string = raw?.name ?? raw?.processName ?? 'Assignment';
 
-      setLaunchedCase({ caseID, assignmentID, assignmentName });
+      setLaunchedCase({ caseID, assignmentID });
       setStage('launched');
 
       launchCase(caseID, assignmentID);
@@ -171,27 +160,10 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
           <StyledCaseCard>
             <StyledCaseCardHeader>
               <StyledSuccessIcon>✓</StyledSuccessIcon>
-              <StyledCaseCardTitle>Case created and launched</StyledCaseCardTitle>
+              <StyledCaseCardTitle>Case created</StyledCaseCardTitle>
             </StyledCaseCardHeader>
-
-            <StyledCaseDetails>
-              {launchedCase.caseID && (
-                <StyledDetailRow>
-                  <StyledDetailLabel>Case ID</StyledDetailLabel>
-                  <StyledDetailValue>{launchedCase.caseID}</StyledDetailValue>
-                </StyledDetailRow>
-              )}
-              <StyledDetailRow>
-                <StyledDetailLabel>View</StyledDetailLabel>
-                <StyledDetailValue>{viewName}</StyledDetailValue>
-              </StyledDetailRow>
-            </StyledCaseDetails>
-
-            {launchedCase.assignmentID && (
-              <StyledAssignmentSection>
-                <StyledAssignmentLabel>Assignment opened</StyledAssignmentLabel>
-                <StyledAssignmentName>{launchedCase.assignmentName}</StyledAssignmentName>
-              </StyledAssignmentSection>
+            {launchedCase.caseID && (
+              <StyledCaseID>{launchedCase.caseID}</StyledCaseID>
             )}
           </StyledCaseCard>
 

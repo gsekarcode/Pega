@@ -1,7 +1,7 @@
 {
   "name": "DevDX_Extensions_CaseCreate",
   "label": "Case Create",
-  "description": "Creates a case via the DX REST API and immediately opens the case view and first assignment in the specified container.",
+  "description": "Creates a case via the DX REST API and immediately opens the assignment in the portal work area.",
   "organization": "DevDX",
   "version": "1.0.0",
   "library": "Extensions",
@@ -47,13 +47,6 @@
       "placeholder": "e.g. pyDetails"
     },
     {
-      "name": "containerName",
-      "label": "Open in container",
-      "format": "TEXT",
-      "defaultValue": "primary",
-      "placeholder": "primary, workarea, or modal"
-    },
-    {
       "name": "autoCreate",
       "label": "Auto-create on load",
       "format": "BOOLEAN",
@@ -75,7 +68,6 @@
     "heading": "Create case",
     "labelCreate": "Create case",
     "viewName": "pyDetails",
-    "containerName": "primary",
     "autoCreate": false
   }
 }

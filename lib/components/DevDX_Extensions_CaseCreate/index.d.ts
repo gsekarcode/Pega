@@ -8,8 +8,6 @@ interface CaseCreateProps {
     labelCreate?: string;
     /** View to open after creation (default: pyDetails) */
     viewName?: string;
-    /** Container slot to open the case in (default: primary) */
-    containerName?: string;
     autoCreate?: boolean | string;
 }
 declare function DevDXExtensionsCaseCreate(props: CaseCreateProps): import("react/jsx-runtime").JSX.Element;

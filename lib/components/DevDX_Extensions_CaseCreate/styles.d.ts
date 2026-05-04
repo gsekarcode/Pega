@@ -8,13 +8,7 @@ export declare const StyledCaseCard: import("styled-components").StyledComponent
 export declare const StyledCaseCardHeader: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 export declare const StyledSuccessIcon: import("styled-components").StyledComponent<"span", import("styled-components").DefaultTheme, {}, never>;
 export declare const StyledCaseCardTitle: import("styled-components").StyledComponent<"span", import("styled-components").DefaultTheme, {}, never>;
-export declare const StyledCaseDetails: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
-export declare const StyledDetailRow: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
-export declare const StyledDetailLabel: import("styled-components").StyledComponent<"span", import("styled-components").DefaultTheme, {}, never>;
-export declare const StyledDetailValue: import("styled-components").StyledComponent<"span", import("styled-components").DefaultTheme, {}, never>;
-export declare const StyledAssignmentSection: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
-export declare const StyledAssignmentLabel: import("styled-components").StyledComponent<"p", import("styled-components").DefaultTheme, {}, never>;
-export declare const StyledAssignmentName: import("styled-components").StyledComponent<"p", import("styled-components").DefaultTheme, {}, never>;
+export declare const StyledCaseID: import("styled-components").StyledComponent<"p", import("styled-components").DefaultTheme, {}, never>;
 export declare const StyledActionBar: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 export declare const StyledError: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 //# sourceMappingURL=styles.d.ts.map
