@@ -6,8 +6,6 @@ interface CaseCreateProps {
     /** pyClassName of the case type to create */
     classFilter: string;
     labelCreate?: string;
-    /** View to open after creation (default: pyDetails) */
-    viewName?: string;
     autoCreate?: boolean | string;
 }
 declare function DevDXExtensionsCaseCreate(props: CaseCreateProps): import("react/jsx-runtime").JSX.Element;

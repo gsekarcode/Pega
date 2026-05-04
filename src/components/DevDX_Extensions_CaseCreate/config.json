@@ -40,13 +40,6 @@
       "defaultValue": "Create case"
     },
     {
-      "name": "viewName",
-      "label": "Case view name",
-      "format": "TEXT",
-      "defaultValue": "pyDetails",
-      "placeholder": "e.g. pyDetails"
-    },
-    {
       "name": "autoCreate",
       "label": "Auto-create on load",
       "format": "BOOLEAN",
@@ -67,7 +60,6 @@
   "defaultConfig": {
     "heading": "Create case",
     "labelCreate": "Create case",
-    "viewName": "pyDetails",
     "autoCreate": false
   }
 }
