@@ -1,0 +1,81 @@
+{
+  "name": "DevDX_Extensions_CaseCreate",
+  "label": "Case Create",
+  "description": "Creates a case via the DX REST API and immediately opens the case view and first assignment in the specified container.",
+  "organization": "DevDX",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "DevDX_Extensions_CaseCreate",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "properties": [
+    {
+      "name": "heading",
+      "label": "Heading",
+      "format": "TEXT",
+      "defaultValue": "Create case"
+    },
+    {
+      "name": "description",
+      "label": "Description",
+      "format": "TEXT"
+    },
+    {
+      "name": "classFilter",
+      "label": "Case type",
+      "format": "SELECT",
+      "placeholder": "Choose a case type...",
+      "source": {
+        "name": "D_pyQuickCreate",
+        "displayProp": "pyLabel",
+        "valueProp": "pyClassName"
+      },
+      "required": true
+    },
+    {
+      "name": "labelCreate",
+      "label": "Create button label",
+      "format": "TEXT",
+      "defaultValue": "Create case"
+    },
+    {
+      "name": "viewName",
+      "label": "Case view name",
+      "format": "TEXT",
+      "defaultValue": "pyDetails",
+      "placeholder": "e.g. pyDetails"
+    },
+    {
+      "name": "containerName",
+      "label": "Open in container",
+      "format": "TEXT",
+      "defaultValue": "primary",
+      "placeholder": "primary, workarea, or modal"
+    },
+    {
+      "name": "autoCreate",
+      "label": "Auto-create on load",
+      "format": "BOOLEAN",
+      "defaultValue": false
+    },
+    {
+      "label": "Conditions",
+      "format": "GROUP",
+      "properties": [
+        {
+          "name": "visibility",
+          "label": "Visibility",
+          "format": "VISIBILITY"
+        }
+      ]
+    }
+  ],
+  "defaultConfig": {
+    "heading": "Create case",
+    "labelCreate": "Create case",
+    "viewName": "pyDetails",
+    "containerName": "primary",
+    "autoCreate": false
+  }
+}
