@@ -13,7 +13,6 @@ import {
   StyledCaseCardHeader,
   StyledSuccessIcon,
   StyledCaseCardTitle,
-  StyledCaseID,
   StyledActionBar,
   StyledError
 } from './styles';
@@ -32,11 +31,6 @@ interface CaseCreateProps {
 }
 
 type Stage = 'idle' | 'creating' | 'launched' | 'error';
-
-interface LaunchedCase {
-  caseID: string;
-  assignmentID: string;
-}
 
 const coerceBool = (val: boolean | string | undefined, fallback: boolean): boolean => {
   if (val === undefined || val === null) return fallback;
@@ -58,17 +52,7 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
   const hasAutoCreated = useRef(false);
 
   const [stage, setStage] = useState<Stage>('idle');
-  const [launchedCase, setLaunchedCase] = useState<LaunchedCase | null>(null);
   const [error, setError] = useState('');
-
-  const launchCase = (caseID: string, assignmentID: string) => {
-    const PCore = (window as any).PCore;
-    if (assignmentID) {
-      PCore.getMashupApi().openAssignment(assignmentID, containerName, { viewName });
-    } else {
-      PCore.getMashupApi().openCase(caseID, containerName, { viewName });
-    }
-  };
 
   const createCase = async () => {
     if (!classFilter) {
@@ -81,33 +65,10 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
     setError('');
 
     const PCore = (window as any).PCore;
-    const baseUrl = PCore.getEnvironmentInfo().getDefaultBaseURL();
 
     try {
-      const response = await fetch(`${baseUrl}/api/application/v2/cases`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          caseTypeID: classFilter,
-          processID: 'pyStartCase',
-          content: {}
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to create case: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const caseID: string = data?.ID ?? data?.caseInfo?.ID ?? '';
-      const rawAssignments: any[] = data?.data?.caseInfo?.assignments ?? data?.caseInfo?.assignments ?? [];
-      const raw = rawAssignments[0];
-      const assignmentID: string = raw?.ID ?? raw?.id ?? '';
-
-      setLaunchedCase({ caseID, assignmentID });
+      await PCore.getMashupApi().createCase(classFilter, containerName, { pageName: viewName });
       setStage('launched');
-
-      launchCase(caseID, assignmentID);
     } catch (e: any) {
       setError(e?.message ?? 'Failed to create case.');
       setStage('error');
@@ -124,7 +85,6 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
 
   const reset = () => {
     setStage('idle');
-    setLaunchedCase(null);
     setError('');
   };
 
@@ -157,16 +117,13 @@ function DevDXExtensionsCaseCreate(props: CaseCreateProps) {
         </Button>
       )}
 
-      {stage === 'launched' && launchedCase && (
+      {stage === 'launched' && (
         <>
           <StyledCaseCard>
             <StyledCaseCardHeader>
               <StyledSuccessIcon>✓</StyledSuccessIcon>
               <StyledCaseCardTitle>Case created</StyledCaseCardTitle>
             </StyledCaseCardHeader>
-            {launchedCase.caseID && (
-              <StyledCaseID>{launchedCase.caseID}</StyledCaseID>
-            )}
           </StyledCaseCard>
 
           <StyledActionBar>
