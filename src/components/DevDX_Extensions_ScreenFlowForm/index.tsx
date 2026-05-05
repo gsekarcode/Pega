@@ -94,17 +94,15 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
   };
 
   // Cancel the entire flow — opens a named flow action if configured, otherwise cancels directly
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleCancel = () => {
     if (cancelActionName) {
-      const caseInfo = pConn.getCaseInfo();
-      const caseID = caseInfo?.getID?.() ?? '';
-      console.log('[ScreenFlowForm] openLocalAction', { cancelActionName, caseID, contextName });
-      pConn.getActionsApi().openLocalAction(cancelActionName, {
-        target:        e.currentTarget,
-        containerName: 'primary',
-        type:          'Case',
-        caseID
-      });
+      const actionsAPI = pConn.getActionsApi();
+      const openLocalAction = actionsAPI.openLocalAction.bind(actionsAPI);
+      openLocalAction(cancelActionName, {
+        caseID:        pConn.getCaseInfo().getID(),
+        containerName: 'modal',
+        type:          'express'
+      } as any);
     } else {
       pConn.getActionsApi().cancelAssignment(contextName);
     }
@@ -173,7 +171,7 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
         <StyledActionBar data-testid='screen-flow-actions'>
           {/* Cancel — pinned to the left */}
           {showCancelButton && (
-            <Button variant='secondary' onClick={(e: any) => handleCancel(e)} data-testid='btn-cancel'>
+            <Button variant='secondary' onClick={handleCancel} data-testid='btn-cancel'>
               {labelCancel}
             </Button>
           )}
