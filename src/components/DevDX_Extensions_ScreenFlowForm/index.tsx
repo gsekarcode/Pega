@@ -99,7 +99,7 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
       const actionsAPI = pConn.getActionsApi();
       const openLocalAction = actionsAPI.openLocalAction.bind(actionsAPI);
       openLocalAction(cancelActionName, {
-        caseID:        pConn.getCaseInfo().getID(),
+        caseID:        pConn.getCaseInfo().getKey(),
         containerName: 'modal',
         type:          'express'
       } as any);
