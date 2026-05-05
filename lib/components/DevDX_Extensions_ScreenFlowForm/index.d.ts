@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import type { PConnProps } from './PConnProps';
 import './create-nonce';
 interface ScreenFlowFormProps extends PConnProps {

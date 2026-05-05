@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import './create-nonce';
 interface CaseCreateProps {
     heading?: string;
