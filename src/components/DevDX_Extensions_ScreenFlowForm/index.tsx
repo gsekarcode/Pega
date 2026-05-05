@@ -97,11 +97,13 @@ export const DevDXExtensionsScreenFlowForm = (props: ScreenFlowFormProps) => {
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (cancelActionName) {
       const caseInfo = pConn.getCaseInfo();
+      const caseID = caseInfo?.getID?.() ?? '';
+      console.log('[ScreenFlowForm] openLocalAction', { cancelActionName, caseID, contextName });
       pConn.getActionsApi().openLocalAction(cancelActionName, {
         target:        e.currentTarget,
-        containerName: 'modal',
+        containerName: 'primary',
         type:          'Case',
-        caseID:        caseInfo?.getID?.() ?? ''
+        caseID
       });
     } else {
       pConn.getActionsApi().cancelAssignment(contextName);
